@@ -6,12 +6,17 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/02/19 17:26:12 by ferre         #+#    #+#                 */
-/*   Updated: 2025/02/19 17:47:41 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/10 23:24:21 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 #define MINIRT_H
+
+#include "vector.h"
+
+#define WIDTH 800
+#define HEIGHT 800
 
 typedef struct s_mlx_data
 {
@@ -26,52 +31,53 @@ typedef struct s_mlx_data
 	int height;
 } t_mlx_data;
 
-typedef struct s_xyz
-{
-	float x;
-	float y;
-	float z;
-} t_xyz;
-
-typedef struct s_rgb
-{
-	int r;
-	int g;
-	int b;
-} t_rgb;
-
 typedef struct s_ambient
 {
 	float intensity;
-	t_rgb colour;
+	t_vec color;
 } t_ambient;
 
 typedef struct s_camera
 {
-	t_xyz position;
-	t_xyz orientation;
+	t_vec position;
+	t_vec foward;
+	t_vec up;
+	t_vec right;
 	float fov;
+	float aspectRatio;
 } t_camera;
 
 typedef struct s_light
 {
 	float intensity;
-	t_rgb colour;
-	t_xyz source;
+	t_vec color;
+	t_vec source;
 } t_light;
+
+typedef struct s_sphere
+{
+	t_vec color;
+	t_vec center;
+	float radius;
+} t_sphere;
 
 typedef struct s_scene_data
 {
 	t_ambient ambient;
 	t_camera camera;
 	t_light light;
-	// SHAPES + NUM OF SHAPES
 } t_scene_data;
+
+//typedef struct s_ray_data
+//{
+//	t_ray rays[WIDTH][HEIGHT];
+//} t_ray_data;
 
 typedef struct s_data
 {
 	t_mlx_data mlx_data;
 	t_scene_data scene_data;
+	//t_ray_data ray_data;
 } t_data;
 
 #endif

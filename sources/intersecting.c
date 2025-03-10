@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   vector.h                                           :+:    :+:            */
+/*   intersecting.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/03/10 21:26:28 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/10 23:11:26 by ferre         ########   odam.nl         */
+/*   Created: 2025/03/10 22:49:31 by ferre         #+#    #+#                 */
+/*   Updated: 2025/03/10 22:57:20 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VECTOR_H
-#define VECTOR_H
+#include "minirt.h"
+#include "vector.h"
 
-typedef struct s_vec
+int intersectingSphere(t_vec point, t_sphere sphere)
 {
-	float x;
-	float y;
-	float z;
-} t_vec;
+	float centerDistance;
 
-float length(t_vec vec);
-t_vec normalize(t_vec vec);
-t_vec cross(t_vec a, t_vec b);
-t_vec add(t_vec a, t_vec b);
-t_vec sub(t_vec a, t_vec b);
-t_vec mult(t_vec a, float b);
-float distance(t_vec a, t_vec b);
-float dot(t_vec a, t_vec b);
-
-#endif
+	centerDistance = distance(point, sphere.center);
+	if (centerDistance < sphere.radius) 
+		return (1);
+	return (0);
+}
