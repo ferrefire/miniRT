@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/02/19 17:59:01 by ferre         #+#    #+#                 */
-/*   Updated: 2025/02/19 18:39:20 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/10 20:41:21 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,16 @@ void	cleanData(t_data *data)
 void	cleanMLX(t_mlx_data *data)
 {
 	printf("cleaning mlx...\n");
-	mlx_clear_window(data->mlx, data->win);
-	mlx_destroy_window(data->mlx, data->win);
-	mlx_destroy_display(data->mlx);
-	clear(&data->mlx);
+	if (data->mlx)
+	{
+		if (data->win)
+		{
+			mlx_clear_window(data->mlx, data->win);
+			mlx_destroy_window(data->mlx, data->win);
+		}
+		mlx_destroy_display(data->mlx);
+		clear(&data->mlx);
+	}
 }
 
 void	clear(void *address)

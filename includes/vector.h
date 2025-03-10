@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   vector.h                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/02/19 17:24:26 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/10 21:44:57 by ferre         ########   odam.nl         */
+/*   Created: 2025/03/10 21:26:28 by ferre         #+#    #+#                 */
+/*   Updated: 2025/03/10 21:30:37 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
-#include "initiation.h"
-#include "cleaning.h"
-#include "rendering.h"
-#include "input.h"
-#include "vector.h"
-#include "utilities.h"
+#ifndef VECTOR_H
+#define VECTOR_H
 
-#include <stdio.h>
-#include <stdlib.h>
-
-int main()
+typedef struct s_vec
 {
-	t_data *data;
+	float x;
+	float y;
+	float z;
+} t_vec;
 
-	printf("start\n");
-	data = initiateData();
-	setHooks(data);
+float length(t_vec vec);
+t_vec normalize(t_vec vec);
 
-	renderImage(data);
-
-	cleanData(data);
-	printf("end\n");
-	exit(EXIT_SUCCESS);
-}
+#endif

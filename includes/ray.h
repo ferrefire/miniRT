@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ray.h                                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/02/19 17:24:26 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/10 21:44:57 by ferre         ########   odam.nl         */
+/*   Created: 2025/03/10 21:25:15 by ferre         #+#    #+#                 */
+/*   Updated: 2025/03/10 21:28:18 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef RAY_H
+#define RAY_H
+
 #include "minirt.h"
-#include "initiation.h"
-#include "cleaning.h"
-#include "rendering.h"
-#include "input.h"
 #include "vector.h"
-#include "utilities.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
-int main()
+typedef struct s_ray
 {
-	t_data *data;
+	t_vec position;
+	t_vec direction;
+	t_rgb color;
+} t_ray;
 
-	printf("start\n");
-	data = initiateData();
-	setHooks(data);
-
-	renderImage(data);
-
-	cleanData(data);
-	printf("end\n");
-	exit(EXIT_SUCCESS);
-}
+#endif

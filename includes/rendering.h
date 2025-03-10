@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   rendering.h                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/02/19 17:24:26 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/10 21:44:57 by ferre         ########   odam.nl         */
+/*   Created: 2025/03/10 20:20:55 by ferre         #+#    #+#                 */
+/*   Updated: 2025/03/10 21:11:16 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef RENDERING_H
+#define RENDERING_H
+
 #include "minirt.h"
-#include "initiation.h"
-#include "cleaning.h"
-#include "rendering.h"
-#include "input.h"
-#include "vector.h"
-#include "utilities.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+#define WHITE (t_rgb){255, 255, 255}
+#define RED (t_rgb){255, 0, 0}
+#define GREEN (t_rgb){0, 255, 0}
+#define BLUE (t_rgb){0, 0, 255}
 
-int main()
-{
-	t_data *data;
+int colorToInt(t_rgb color);
+void renderPixel(int x, int y, t_rgb color, t_data *data);
+void renderImage(t_data *data);
 
-	printf("start\n");
-	data = initiateData();
-	setHooks(data);
-
-	renderImage(data);
-
-	cleanData(data);
-	printf("end\n");
-	exit(EXIT_SUCCESS);
-}
+#endif

@@ -1,37 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   vector.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/02/19 17:24:26 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/10 21:44:57 by ferre         ########   odam.nl         */
+/*   Created: 2025/03/10 21:30:45 by ferre         #+#    #+#                 */
+/*   Updated: 2025/03/10 21:35:04 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include "initiation.h"
-#include "cleaning.h"
-#include "rendering.h"
-#include "input.h"
 #include "vector.h"
-#include "utilities.h"
+#include "math.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
-int main()
+float length(t_vec vec)
 {
-	t_data *data;
+	return (sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z));
+}
 
-	printf("start\n");
-	data = initiateData();
-	setHooks(data);
+t_vec normalize(t_vec vec)
+{
+	t_vec normalized;
+	float magnitude;
 
-	renderImage(data);
+	magnitude = length(vec);
+	normalized.x = vec.x / magnitude;
+	normalized.y = vec.y / magnitude;
+	normalized.z = vec.z / magnitude;
 
-	cleanData(data);
-	printf("end\n");
-	exit(EXIT_SUCCESS);
+	return (normalized);
 }
