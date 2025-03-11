@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utilities.h                                        :+:    :+:            */
+/*   ft_strdup.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: ferre <ferre@student.codam.nl>               +#+                     */
+/*   By: hflohil- <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/03/10 21:37:01 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 13:37:40 by ferre         ########   odam.nl         */
+/*   Created: 2022/10/19 19:02:26 by hflohil-      #+#    #+#                 */
+/*   Updated: 2022/10/19 19:02:27 by hflohil-      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILITIES_H
-#define UTILITIES_H
+#include "libft.h"
 
-#include "vector.h"
+char	*ft_strdup(const char *s1)
+{
+	int		i;
+	char	*buffer;
 
-void printVector(t_vec vec);
-float clamp(float value, float min, float max);
-
-#endif
+	i = 0;
+	buffer = malloc(ft_strlen(s1) + 1);
+	if (!buffer)
+		return (0);
+	while (s1[i])
+	{
+		buffer[i] = s1[i];
+		i++;
+	}
+	buffer[i] = '\0';
+	return (buffer);
+}

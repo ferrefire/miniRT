@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utilities.h                                        :+:    :+:            */
+/*   ft_memchr.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: ferre <ferre@student.codam.nl>               +#+                     */
+/*   By: hflohil- <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/03/10 21:37:01 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 13:37:40 by ferre         ########   odam.nl         */
+/*   Created: 2022/10/06 16:17:57 by hflohil-      #+#    #+#                 */
+/*   Updated: 2022/10/06 16:30:23 by hflohil-      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILITIES_H
-#define UTILITIES_H
+#include "libft.h"
 
-#include "vector.h"
+int	ft_lstsize(t_list *lst)
+{
+	int		cnt;
+	t_list	*temp;
 
-void printVector(t_vec vec);
-float clamp(float value, float min, float max);
-
-#endif
+	temp = lst;
+	cnt = 0;
+	while (temp != NULL)
+	{
+		temp = temp->next;
+		cnt++;
+	}
+	return (cnt);
+}

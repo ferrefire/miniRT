@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utilities.h                                        :+:    :+:            */
+/*   isalpha.c                                          :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: ferre <ferre@student.codam.nl>               +#+                     */
+/*   By: hflohil- <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/03/10 21:37:01 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 13:37:40 by ferre         ########   odam.nl         */
+/*   Created: 2022/10/04 12:58:35 by hflohil-      #+#    #+#                 */
+/*   Updated: 2022/10/05 13:54:27 by hflohil-      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILITIES_H
-#define UTILITIES_H
+#include "libft.h"
 
-#include "vector.h"
-
-void printVector(t_vec vec);
-float clamp(float value, float min, float max);
-
-#endif
+int	ft_isalpha(int c)
+{
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+		return (1);
+	else
+		return (0);
+}

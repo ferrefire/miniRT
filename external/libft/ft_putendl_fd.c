@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utilities.h                                        :+:    :+:            */
+/*   ft_memset.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: ferre <ferre@student.codam.nl>               +#+                     */
+/*   By: hflohil- <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/03/10 21:37:01 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 13:37:40 by ferre         ########   odam.nl         */
+/*   Created: 2022/10/04 15:36:22 by hflohil-      #+#    #+#                 */
+/*   Updated: 2022/10/06 10:49:55 by hflohil-      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILITIES_H
-#define UTILITIES_H
+#include "libft.h"
 
-#include "vector.h"
+void	ft_putendl_fd(char *s, int fd)
+{
+	int	i;
 
-void printVector(t_vec vec);
-float clamp(float value, float min, float max);
-
-#endif
+	i = 0;
+	while (s[i] != '\0')
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+	write(fd, "\n", 1);
+}

@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 20:20:55 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/10 23:14:12 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/11 13:42:23 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@
 int colorToInt(t_vec color);
 void renderPixel(int x, int y, t_vec color, t_data *data);
 void renderImage(t_data *data);
-t_vec traceRay(t_ray ray);
+t_vec traceRay(t_ray ray, t_scene_data scene);
 
 #endif

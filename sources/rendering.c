@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 20:18:41 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/10 23:24:00 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/11 13:50:24 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "rendering.h"
 #include "intersecting.h"
 #include "ray.h"
+#include "utilities.h"
 
 int colorToInt(t_vec color)
 {
@@ -39,7 +40,7 @@ void renderImage(t_data *data)
 		{
 			//t_vec pixelColor = (t_vec){(int)(((float)x / (float)data->mlx_data.width) * 255), (int)(((float)y / (float)data->mlx_data.height) * 255), 255};
 			t_ray currentRay = initiateRay(x, y, data->scene_data.camera);
-			t_vec pixelColor = traceRay(currentRay);
+			t_vec pixelColor = traceRay(currentRay, data->scene_data);
 			renderPixel(x, y, pixelColor, data);
 			x++;
 		}
@@ -49,7 +50,7 @@ void renderImage(t_data *data)
 	mlx_loop(data->mlx_data.mlx);
 }
 
-t_vec traceRay(t_ray ray)
+t_vec traceRay(t_ray ray, t_scene_data scene)
 {
 	int iterations;
 	t_sphere sphere;
@@ -62,7 +63,7 @@ t_vec traceRay(t_ray ray)
 	{
 		if (intersectingSphere(ray.position, sphere))
 		{
-			float diffuse = dot(normalize(sub(ray.position, sphere.center)), (t_vec){0, 1, 0}) * 0.5 + 0.5;
+			float diffuse = clamp(dot(normalize(sub(ray.position, sphere.center)), scene.light.source), scene.ambient.intensity, 1.0);
 			return (mult(WHITE, diffuse));
 		}
 		ray.position = add(ray.position, mult(ray.direction, 0.1));

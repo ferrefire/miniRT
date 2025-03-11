@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/02/19 17:55:00 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/10 22:59:13 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/11 13:46:49 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ void	initiateScene(t_scene_data *data)
 	data->camera.up = normalize(cross(data->camera.right, data->camera.foward));
 	data->camera.fov = 45;
 	data->camera.aspectRatio = (float)WIDTH / (float)HEIGHT;
+	data->ambient.color = (t_vec){255, 255, 255};
+	data->ambient.intensity = 0.1;
+	data->light.color = (t_vec){255, 255, 255};
+	data->light.intensity = 1.0;
+	data->light.source = normalize((t_vec){1, 1, -1});
 }
 
 /*void	initiateRays(t_ray_data *data, t_camera camera)
