@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/11 14:42:55 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 14:53:40 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/11 15:10:05 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 #include "parsing.h"
 #include "libft.h"
 
-#include "math.h"
+#include <math.h>
+#include <stdio.h>
 
 void parse_sphere(char **tokens, t_shapes *shapes)
 {
@@ -46,7 +47,7 @@ void parse_sphere(char **tokens, t_shapes *shapes)
 	sphere = &shapes->spheres[shapes->sphereCount];
 	sphere->type = 1;
 	sphere->center = parse_vec(tokens[1]);
-	sphere->radius = ft_atof(tokens[2]);
+	sphere->radius = atof(tokens[2]);
 	sphere->color = parse_vec(tokens[3]);
 
 	if (sphere->radius <= 0)
@@ -136,8 +137,8 @@ void parse_cylinder(char **tokens, t_shapes *shapes)
 	cylinder->type = 3; // Type identifier for cylinder
 	cylinder->position = parse_vec(tokens[1]);
 	cylinder->axis = parse_vec(tokens[2]);
-	cylinder->radius = ft_atof(tokens[3]);
-	cylinder->height = ft_atof(tokens[4]);
+	cylinder->radius = atof(tokens[3]);
+	cylinder->height = atof(tokens[4]);
 	cylinder->color = parse_vec(tokens[5]);
 
 	length = sqrt(cylinder->axis.x * cylinder->axis.x +
@@ -193,8 +194,8 @@ void parse_cone(char **tokens, t_shapes *shapes)
 	cone->type = 4;
 	cone->vertex = parse_vec(tokens[1]);
 	cone->axis = parse_vec(tokens[2]);
-	cone->angle = ft_atof(tokens[3]);
-	cone->height = ft_atof(tokens[4]);
+	cone->angle = atof(tokens[3]);
+	cone->height = atof(tokens[4]);
 	cone->color = parse_vec(tokens[5]);
 
 	length = sqrt(cone->axis.x * cone->axis.x +
@@ -287,7 +288,7 @@ void parse_disc(char **tokens, t_shapes *shapes)
 	disc->type = 6;
 	disc->center = parse_vec(tokens[1]);
 	disc->normal = parse_vec(tokens[2]);
-	disc->radius = ft_atof(tokens[3]);
+	disc->radius = atof(tokens[3]);
 	disc->color = parse_vec(tokens[4]);
 
 	length = sqrt(disc->normal.x * disc->normal.x +

@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 20:18:41 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 13:50:24 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/11 15:47:20 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,31 @@ void renderImage(t_data *data)
 t_vec traceRay(t_ray ray, t_scene_data scene)
 {
 	int iterations;
-	t_sphere sphere;
-	sphere.center = (t_vec){0, 0, 10};
-	sphere.radius = 2.5;
-	sphere.color = WHITE;
+	//t_sphere sphere;
+	//sphere.center = (t_vec){0, 0, 10};
+	//sphere.radius = 2.5;
+	//sphere.color = WHITE;
 
 	iterations = 0;
-	while (iterations < 200)
+	while (iterations < 100)
 	{
-		if (intersectingSphere(ray.position, sphere))
+		int i = 0;
+		while (i < scene.shapes.sphereCount)
 		{
-			float diffuse = clamp(dot(normalize(sub(ray.position, sphere.center)), scene.light.source), scene.ambient.intensity, 1.0);
-			return (mult(WHITE, diffuse));
+			if (intersectingSphere(ray.position, scene.shapes.spheres[i]))
+			{
+				float diffuse = clamp(dot(normalize(sub(ray.position, scene.shapes.spheres[i].center)), scene.light.source), scene.ambient.intensity, 1.0);
+				return (mult(scene.shapes.spheres[i].color, diffuse));
+			}
+			i++;
 		}
-		ray.position = add(ray.position, mult(ray.direction, 0.1));
+		
+		//if (intersectingSphere(ray.position, sphere))
+		//{
+		//	float diffuse = clamp(dot(normalize(sub(ray.position, sphere.center)), scene.light.source), scene.ambient.intensity, 1.0);
+		//	return (mult(WHITE, diffuse));
+		//}
+		ray.position = add(ray.position, mult(ray.direction, 0.5));
 		iterations++;
 	}
 	

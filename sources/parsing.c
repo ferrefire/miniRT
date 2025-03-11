@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/11 14:11:00 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 14:57:06 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/11 15:20:11 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void valid_file(char *file)
 	}
 }
 
-void parse_file(const char *filename, t_data *data)
+void parse_file(const char *filename, t_scene_data *data)
 {
 	int fd;
 	char *line;
@@ -57,7 +57,7 @@ void parse_file(const char *filename, t_data *data)
 			free(line);
 			continue;
 		}
-		parse_line(line, &data->scene_data);
+		parse_line(line, data);
 		free(line);
 	}
 	close(fd);

@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/11 14:34:32 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 14:41:33 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/11 15:09:17 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "parsing.h"
 
 #include <stdlib.h> // For malloc, free, exit
+#include <stdio.h>
 
 void parse_ambient(char **tokens, t_scene_data *scene)
 {

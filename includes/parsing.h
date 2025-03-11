@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/11 14:01:36 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 14:39:32 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/11 15:20:24 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "vector.h"
 
 void valid_file(char *file);
-void parse_file(const char *filename, t_data *data);
+void parse_file(const char *filename, t_scene_data *data);
 void parse_line(char *line, t_scene_data *scene);
 t_vec parse_vec(const char *str);
 

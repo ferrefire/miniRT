@@ -3,16 +3,16 @@
 /*                                                        ::::::::            */
 /*   get_next_line_utils.c                              :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: hflohil- <marvin@codam.nl>                   +#+                     */
+/*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:12:58 by hflohil-      #+#    #+#                 */
-/*   Updated: 2022/10/06 15:17:13 by hflohil-      ########   odam.nl         */
+/*   Updated: 2025/03/11 15:07:09 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+/*char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
 	char	*buffer;
@@ -33,7 +33,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	buffer[i] = '\0';
 	return (buffer);
-}
+}*/
 
 char	*ft_empty_string(void)
 {
@@ -50,7 +50,7 @@ char	*ft_empty_string(void)
 	return (buffer);
 }
 
-char	*ft_strchr(const char *s, int c)
+/*char	*ft_strchr(const char *s, int c)
 {
 	char			*target;
 	char			c_char;
@@ -67,9 +67,9 @@ char	*ft_strchr(const char *s, int c)
 		return (target);
 	else
 		return (0);
-}
+}*/
 
-size_t	ft_strlen(const char *s)
+/*size_t	ft_strlen(const char *s)
 {
 	int	i;
 
@@ -77,9 +77,9 @@ size_t	ft_strlen(const char *s)
 	while (s[i] != '\0')
 		i++;
 	return (i);
-}
+}*/
 
-char	*ft_strjoin(char const *s1, char const *s2)
+/*char	*ft_strjoin(char const *s1, char const *s2)
 {
 	unsigned int	len;
 	unsigned int	i;
@@ -104,4 +104,4 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	buffer[i + c] = '\0';
 	return (buffer);
-}
+}*/

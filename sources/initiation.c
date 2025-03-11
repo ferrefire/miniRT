@@ -6,13 +6,14 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/02/19 17:55:00 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 13:46:49 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/11 15:36:36 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
 #include "minirt.h"
 #include "initiation.h"
+#include "parsing.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,8 +24,8 @@ t_data	*initiateData(void)
 
 	printf("initiating...\n");
 	data = malloc(sizeof(t_data));
-	initiateMLX(&data->mlx_data);
 	initiateScene(&data->scene_data);
+	initiateMLX(&data->mlx_data);
 	return (data);
 }
 
@@ -35,13 +36,14 @@ void	initiateMLX(t_mlx_data *data)
 	data->height = HEIGHT;
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, data->width, data->height, "test");
-	data->img = NULL;
-	data->addr = NULL;
+	//data->img = NULL;
+	//data->addr = NULL;
 }
 
 void	initiateScene(t_scene_data *data)
 {
 	printf("initiating scene...\n");
+	
 	data->camera.position = (t_vec){0, 0, 0};
 	data->camera.foward = (t_vec){0, 0, 1};
 	data->camera.right = normalize(cross(data->camera.foward, (t_vec){0, 1, 0}));
@@ -53,6 +55,24 @@ void	initiateScene(t_scene_data *data)
 	data->light.color = (t_vec){255, 255, 255};
 	data->light.intensity = 1.0;
 	data->light.source = normalize((t_vec){1, 1, -1});
+
+	data->shapes.spheres = NULL;
+	data->shapes.sphereCount = 0;
+	data->shapes.planes = NULL;
+	data->shapes.planeCount = 0;
+	data->shapes.cylinders = NULL;
+	data->shapes.cylinderCount = 0;
+	data->shapes.cones = NULL;
+	data->shapes.coneCount = 0;
+	data->shapes.triangles = NULL;
+	data->shapes.triangleCount = 0;
+	data->shapes.discs = NULL;
+	data->shapes.discCount = 0;
+
+	parse_file("scenes/valid/snowman.rt", data);
+
+	data->light.source = normalize((t_vec){1, 1, -1});
+	data->camera.fov = 45;
 }
 
 /*void	initiateRays(t_ray_data *data, t_camera camera)

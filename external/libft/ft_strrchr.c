@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_strrchr.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: hflohil- <marvin@codam.nl>                   +#+                     */
+/*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:39:00 by hflohil-      #+#    #+#                 */
-/*   Updated: 2022/10/06 15:52:11 by hflohil-      ########   odam.nl         */
+/*   Updated: 2025/03/11 15:01:42 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_strrchr(const char *s, int c)
 {
 	char			*target;
 	char			c_char;
-	unsigned int	len;
+	int	len;
 
 	len = 0;
 	target = (char *)s;

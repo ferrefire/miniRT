@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/02/19 17:24:26 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/10 21:44:57 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/11 15:26:08 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int main()
 	setHooks(data);
 
 	renderImage(data);
+	//printf("sphere cound: %i\n", data->scene_data.shapes.sphereCount);
 
 	cleanData(data);
 	printf("end\n");
