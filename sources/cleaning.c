@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/02/19 17:59:01 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/10 20:41:21 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/11 14:56:33 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,19 @@ void	clear(void *address)
 		}
 		*memory = NULL;
 	}
+}
+
+void free_tokens(char **tokens)
+{
+	int i;
+
+	i = 0;
+	if (!tokens)
+		return;
+	while (tokens[i] != NULL)
+	{
+		free(tokens[i]);
+		i++;
+	}
+	free(tokens);
 }

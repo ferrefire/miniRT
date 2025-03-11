@@ -1,14 +1,14 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         ::::::::             #
 #    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
-#    By: hflohil- <marvin@codam.nl>                   +#+                      #
+#    By: ferre <ferre@student.codam.nl>               +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/10/05 14:00:44 by hflohil-      #+#    #+#                  #
-#    Updated: 2022/10/07 13:07:39 by hflohil-      ########   odam.nl          #
+#    Updated: 2025/03/11 14:59:19 by ferre         ########   odam.nl          #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 NAME	= libft.a
 CC		= gcc
@@ -22,7 +22,7 @@ SRCS 		=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c \
 				ft_atoi.c ft_calloc.c ft_strdup.c ft_substr.c \
 				ft_strjoin.c ft_itoa.c ft_putchar_fd.c ft_putstr_fd.c \
 				ft_putendl_fd.c ft_putnbr_fd.c ft_strmapi.c ft_striteri.c \
-				ft_strtrim.c ft_split.c
+				ft_strtrim.c ft_split.c get_next_line.c get_next_line_utils.c
 
 BONUS_SRCS	=	ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c \
 				ft_lstlast_bonus.c ft_lstadd_back_bonus.c ft_lstdelone_bonus.c \
@@ -35,7 +35,7 @@ OBJS		=	ft_isalpha.o ft_isdigit.o ft_isalnum.o ft_isascii.o \
 				ft_strncmp.o ft_memchr.o ft_memcmp.o ft_strnstr.o \
 				ft_atoi.o ft_calloc.o ft_strdup.o ft_substr.o ft_strjoin.o \
 				ft_itoa.o ft_putchar_fd.o ft_putstr_fd.o ft_putendl_fd.o \
-				ft_putnbr_fd.o ft_strmapi.o ft_striteri.o ft_strtrim.o ft_split.o
+				ft_putnbr_fd.o ft_strmapi.o ft_striteri.o ft_strtrim.o ft_split.o get_next_line.o get_next_line_utils.o
 
 BONUS_OBJS 	=	ft_lstnew_bonus.o ft_lstadd_front_bonus.o ft_lstsize_bonus.o \
 				ft_lstlast_bonus.o ft_lstadd_back_bonus.o ft_lstdelone_bonus.o \

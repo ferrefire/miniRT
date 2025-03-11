@@ -3,15 +3,17 @@
 /*                                                        ::::::::            */
 /*   libft.h                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: hflohil- <marvin@codam.nl>                   +#+                     */
+/*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/04 16:42:37 by hflohil-      #+#    #+#                 */
-/*   Updated: 2022/10/14 16:35:40 by hflohil-      ########   odam.nl         */
+/*   Updated: 2025/03/11 14:59:45 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
+# include "get_next_line.h"
 # include <unistd.h>
 # include <stdlib.h>
 

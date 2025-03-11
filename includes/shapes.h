@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/11 14:02:36 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 14:08:48 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/11 14:55:40 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 #include "minirt.h"
 #include "vector.h"
+
+#define PI 3.141592654
 
 typedef struct s_sphere
 {
@@ -90,5 +92,13 @@ typedef struct s_shapes
 	t_disc *discs;
 	int discCount;
 } t_shapes;
+
+void parse_sphere(char **tokens, t_shapes *shapes);
+void parse_plane(char **tokens, t_shapes *shapes);
+void parse_cylinder(char **tokens, t_shapes *shapes);
+void parse_cone(char **tokens, t_shapes *shapes);
+void parse_triangle(char **tokens, t_shapes *shapes);
+void parse_disc(char **tokens, t_shapes *shapes);
+void parse_shape(char **tokens, t_shapes *shapes);
 
 #endif

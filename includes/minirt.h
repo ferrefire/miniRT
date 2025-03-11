@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/02/19 17:26:12 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 14:09:04 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/11 14:34:10 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define MINIRT_H
 
 #include "vector.h"
+#include "scene.h"
 #include "shapes.h"
 
 #define WIDTH 400
@@ -27,36 +28,6 @@ typedef struct s_mlx_data
 	int width;
 	int height;
 } t_mlx_data;
-
-typedef struct s_ambient
-{
-	float intensity;
-	t_vec color;
-} t_ambient;
-
-typedef struct s_camera
-{
-	t_vec position;
-	t_vec foward;
-	t_vec up;
-	t_vec right;
-	float fov;
-	float aspectRatio;
-} t_camera;
-
-typedef struct s_light
-{
-	float intensity;
-	t_vec color;
-	t_vec source;
-} t_light;
-
-typedef struct s_sphere
-{
-	t_vec color;
-	t_vec center;
-	float radius;
-} t_sphere;
 
 typedef struct s_scene_data
 {

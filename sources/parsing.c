@@ -6,16 +6,22 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/11 14:11:00 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 14:18:45 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/11 14:57:06 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "parsing.h"
+#include "vector.h"
+#include "scene.h"
+#include "shapes.h"
+#include "cleaning.h"
+#include "libft.h"
 
 #include <stdlib.h> // For malloc, free, exit
 #include <unistd.h> // For open, close, read, write
 #include <fcntl.h>	// For file opening flags
+#include <stdio.h>	// For printf, perror
 
 void valid_file(char *file)
 {
@@ -74,8 +80,31 @@ void parse_line(char *line, t_scene_data *scene)
 	else if (ft_strncmp(tokens[0], "L", ft_strlen("L") + 1) == 0)
 		parse_light(tokens, scene);
 	else if (ft_strlen(tokens[0]) == 2)
-		parse_shape(tokens, scene);
+		parse_shape(tokens, &scene->shapes);
 	else
 		printf("Error: Unknown Element Type = %s\n", tokens[0]);
 	free_tokens(tokens);
+}
+
+t_vec parse_vec(const char *str)
+{
+	t_vec rgb;
+	char **tokens;
+	int i;
+
+	tokens = ft_split(str, ',');
+	i = 0;
+	while (tokens && tokens[i])
+		i++;
+	if (i != 3)
+	{
+		printf("Error parsing rgb values");
+		free_tokens(tokens);
+		exit(EXIT_FAILURE);
+	}
+	rgb.x = ft_atoi(tokens[0]);
+	rgb.y = ft_atoi(tokens[1]);
+	rgb.z = ft_atoi(tokens[2]);
+	free_tokens(tokens);
+	return (rgb);
 }
