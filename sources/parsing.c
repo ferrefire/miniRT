@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/11 14:11:00 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 15:20:11 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/12 21:29:51 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,9 @@ t_vec parse_vec(const char *str)
 		free_tokens(tokens);
 		exit(EXIT_FAILURE);
 	}
-	rgb.x = ft_atoi(tokens[0]);
-	rgb.y = ft_atoi(tokens[1]);
-	rgb.z = ft_atoi(tokens[2]);
+	rgb.x = atof(tokens[0]);
+	rgb.y = atof(tokens[1]);
+	rgb.z = atof(tokens[2]);
 	free_tokens(tokens);
 	return (rgb);
 }

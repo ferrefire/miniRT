@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/11 14:34:32 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 15:09:17 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/12 21:34:55 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void parse_camera(char **tokens, t_scene_data *scene)
 		exit(EXIT_FAILURE);
 	}
 	scene->camera.position = parse_vec(tokens[1]);
-	scene->camera.foward = parse_vec(tokens[2]);
+	scene->camera.foward = normalize(parse_vec(tokens[2]));
 	scene->camera.fov = atof(tokens[3]);
 }
 

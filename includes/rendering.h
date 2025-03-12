@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 20:20:55 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/12 16:32:49 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/12 20:26:50 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_hit
 
 int colorToInt(t_vec color);
 void renderPixel(int x, int y, t_vec color, t_data *data);
-void renderImage(t_data *data);
+int renderImage(t_data *data);
 t_vec traceRay(t_ray ray, t_scene_data scene);
 float inShadow(t_ray ray, t_scene_data scene);
 t_hit checkIntersections(t_ray ray, t_scene_data scene);
