@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/02/19 17:55:00 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 15:36:36 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/12 16:16:57 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	initiateScene(t_scene_data *data)
 
   parse_file("scenes/valid/snowman.rt", data);
 
-	data->light.source = normalize((t_vec){1, 1, -1});
+	//data->light.source = normalize((t_vec){1, 1, -1});
 	data->camera.fov = 45;
 }
 

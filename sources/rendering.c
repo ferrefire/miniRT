@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 20:18:41 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 15:47:20 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/12 16:50:47 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "intersecting.h"
 #include "ray.h"
 #include "utilities.h"
+
+#include <stdio.h>
 
 int colorToInt(t_vec color)
 {
@@ -46,40 +48,84 @@ void renderImage(t_data *data)
 		}
 		y++;
 	}
-	
+	printf("image rendered!\n");
 	mlx_loop(data->mlx_data.mlx);
 }
 
 t_vec traceRay(t_ray ray, t_scene_data scene)
 {
+	t_hit hitInfo;
 	int iterations;
-	//t_sphere sphere;
-	//sphere.center = (t_vec){0, 0, 10};
-	//sphere.radius = 2.5;
-	//sphere.color = WHITE;
 
 	iterations = 0;
-	while (iterations < 100)
+	while (iterations < 500)
 	{
-		int i = 0;
-		while (i < scene.shapes.sphereCount)
+		hitInfo = checkIntersections(ray, scene);
+		if (hitInfo.intersected)
 		{
-			if (intersectingSphere(ray.position, scene.shapes.spheres[i]))
-			{
-				float diffuse = clamp(dot(normalize(sub(ray.position, scene.shapes.spheres[i].center)), scene.light.source), scene.ambient.intensity, 1.0);
-				return (mult(scene.shapes.spheres[i].color, diffuse));
-			}
-			i++;
+			t_vec lightNormal = normalize(sub(scene.light.source, ray.position));
+			float shadow = inShadow((t_ray){ray.position, lightNormal}, scene);
+			float lightDistance = 1.0 - clamp(distance(ray.position, scene.light.source) / 200.0, 0.0, 1.0);
+			float diffuse = clamp(dot(hitInfo.normal, lightNormal) * lightDistance * shadow, scene.ambient.intensity, 1.0);
+			return (mult(hitInfo.color, diffuse));
 		}
-		
-		//if (intersectingSphere(ray.position, sphere))
-		//{
-		//	float diffuse = clamp(dot(normalize(sub(ray.position, sphere.center)), scene.light.source), scene.ambient.intensity, 1.0);
-		//	return (mult(WHITE, diffuse));
-		//}
-		ray.position = add(ray.position, mult(ray.direction, 0.5));
+		ray.position = add(ray.position, mult(ray.direction, 0.1));
 		iterations++;
 	}
 	
 	return (BLACK);
+}
+
+float inShadow(t_ray ray, t_scene_data scene)
+{
+	t_hit hitInfo;
+	int iterations;
+
+	iterations = 0;
+	ray.position = add(ray.position, mult(ray.direction, 0.5));
+	while (iterations < 100)
+	{
+		if (distance(ray.position, scene.light.source) <= 1.0)
+			break;
+		hitInfo = checkIntersections(ray, scene);
+		if (hitInfo.intersected)
+			return (0.0);
+		ray.position = add(ray.position, mult(ray.direction, 0.25));
+		iterations++;
+	}
+
+	return (1.0);
+}
+
+t_hit checkIntersections(t_ray ray, t_scene_data scene)
+{
+	t_hit hitInfo;
+	int i;
+
+	i = 0;
+	while (i < scene.shapes.planeCount)
+	{
+		if (intersectingPlane(ray.position, scene.shapes.planes[i]))
+		{
+			hitInfo.intersected = 1;
+			hitInfo.color = scene.shapes.planes[i].color;
+			hitInfo.normal = scene.shapes.planes[i].normal;
+			return (hitInfo);
+		}
+		i++;
+	}
+	i = 0;
+	while (i < scene.shapes.sphereCount)
+	{
+		if (intersectingSphere(ray.position, scene.shapes.spheres[i]))
+		{
+			hitInfo.intersected = 1;
+			hitInfo.color = scene.shapes.spheres[i].color;
+			hitInfo.normal = normalize(sub(ray.position, scene.shapes.spheres[i].center));
+			return (hitInfo);
+		}
+		i++;
+	}
+	hitInfo.intersected = 0;
+	return (hitInfo);
 }

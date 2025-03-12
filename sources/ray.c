@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 22:35:50 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 15:36:58 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/12 16:31:35 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_ray	initiateRay(int x, int y, t_camera camera)
 
 	result.direction = normalize(add(add(mult(camera.right, u), mult(camera.up, v)), camera.foward));
 	result.position = camera.position;
-	result.color = (t_vec){0, 0, 0};
+	//result.color = (t_vec){0, 0, 0};
 
 	return (result);
 }
