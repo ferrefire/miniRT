@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 20:18:41 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/12 21:51:47 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/12 22:04:12 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,10 @@ t_vec traceRay(t_ray ray, t_scene_data scene)
 		{
 			t_vec lightNormal = normalize(sub(scene.light.source, ray.position));
 			float shadow = inShadow((t_ray){ray.position, lightNormal}, scene);
-			float lightDistance = 1.0 - clamp(distance(ray.position, scene.light.source) / 75.0, 0.0, 1.0);
-			lightDistance *= lightDistance;
-			lightDistance *= lightDistance;
+			//float lightDistance = 1.0 - clamp(distance(ray.position, scene.light.source) / 75.0, 0.0, 1.0);
+			//lightDistance *= lightDistance;
+			//lightDistance *= lightDistance;
+			float lightDistance = 1.0;
 			float diffuse = clamp(dot(hitInfo.normal, lightNormal) * lightDistance * shadow, scene.ambient.intensity, 1.0);
 			return (mult(hitInfo.color, diffuse));
 		}
@@ -132,8 +133,8 @@ t_hit checkIntersections(t_ray ray, t_scene_data scene)
 		{
 			hitInfo.intersected = 1;
 			hitInfo.color = scene.shapes.planes[i].color;
-			//hitInfo.normal = scene.shapes.planes[i].normal;
-			hitInfo.normal = normalize(sub(scene.light.source, ray.position));
+			hitInfo.normal = scene.shapes.planes[i].normal;
+			//hitInfo.normal = normalize(sub(scene.light.source, ray.position));
 			return (hitInfo);
 		}
 		i++;
