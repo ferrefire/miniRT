@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 21:30:45 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/12 21:05:55 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/12 23:09:53 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,9 @@ float distanceSquared(t_vec a, t_vec b)
 float dot(t_vec a, t_vec b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
+}
+
+t_vec lerp(t_vec a, t_vec b, float x)
+{
+	return (add(mult(a, 1.0 - x), mult(b, x)));
 }

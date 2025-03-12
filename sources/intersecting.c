@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 22:49:31 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/12 22:08:44 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/12 23:29:29 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ int intersectingSphere(t_vec point, t_sphere sphere)
 	float centerDistance;
 
 	centerDistance = distance(point, sphere.center);
-	if (centerDistance <= sphere.radius) 
+	if (centerDistance <= sphere.radius)
 		return (1);
+	//centerDistance = distanceSquared(point, sphere.center);
+	//if (centerDistance <= sphere.radius * sphere.radius) 
+	//	return (1);
 	return (0);
 }
 
@@ -52,10 +55,69 @@ t_hit intersectingCylinder(t_vec point, t_cylinder cylinder)
 	axisVec = mult(cylinder.axis, t);
 	axisPoint = add(cylinder.position, axisVec);
 	hitInfo.normal = normalize(sub(point, axisPoint));
-	if (distance(point, axisPoint) <= cylinder.radius)
+	if (distanceSquared(point, axisPoint) <= cylinder.radius * cylinder.radius)
 	{
 		hitInfo.intersected = 1;
 		return (hitInfo);
 	}
 	return (hitInfo);
+}
+
+float closestSphere(t_vec point, t_scene_data scene)
+{
+	t_vec closestSphere;
+	float closestDistance;
+
+	closestDistance = 10000.0;
+	for (int i = 0; i < scene.shapes.sphereCount; i++)
+	{
+		float currentDistance = distanceSquared(point, scene.shapes.spheres[i].center);
+		if (currentDistance < closestDistance)
+		{
+			closestDistance = currentDistance;
+			closestSphere = scene.shapes.spheres[i].center;
+		}
+	}
+
+	if (closestDistance < 10000.0)
+		return (distance(point, closestSphere));
+}
+
+float closestCylinder(t_vec point, t_scene_data scene)
+{
+	t_vec closestCylinder;
+	float closestDistance;
+
+	closestDistance = 10000.0;
+	for (int i = 0; i < scene.shapes.cylinderCount; i++)
+	{
+		t_vec baseVec = sub(point, scene.shapes.cylinders[i].position);
+		float t = dot(baseVec, scene.shapes.cylinders[i].axis);
+		t_vec axisVec = mult(scene.shapes.cylinders[i].axis, t);
+		t_vec axisPoint = add(scene.shapes.cylinders[i].position, axisVec);
+
+		float currentDistance = distanceSquared(point, axisPoint);
+		if (currentDistance < closestDistance)
+		{
+			closestDistance = currentDistance;
+			closestCylinder = axisPoint;
+		}
+	}
+
+	if (closestDistance < 10000.0)
+		return (distance(point, closestCylinder));
+}
+
+float closestShape(t_vec point, t_scene_data scene)
+{
+	float nearestSphere;
+	float nearestCylinder;
+
+	nearestSphere = closestSphere(point, scene);
+	nearestCylinder = closestCylinder(point, scene);
+
+	if (nearestSphere < nearestCylinder)
+		return (nearestSphere);
+	else
+		return (nearestCylinder);
 }

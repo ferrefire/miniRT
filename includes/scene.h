@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/11 14:32:44 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 15:03:33 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/12 23:03:54 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_camera
 	t_vec right;
 	float fov;
 	float aspectRatio;
+	float far;
 } t_camera;
 
 typedef struct s_light
@@ -46,6 +47,7 @@ typedef struct s_scene_data
 	t_camera camera;
 	t_light light;
 	t_shapes shapes;
+	float step;
 } t_scene_data;
 
 void parse_ambient(char **tokens, t_scene_data *scene);
