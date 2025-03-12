@@ -16,7 +16,7 @@
 #include "minirt.h"
 #include "vector.h"
 
-void valid_file(char *file);
+int valid_file(char *file);
 void parse_file(const char *filename, t_scene_data *data);
 void parse_line(char *line, t_scene_data *scene);
 t_vec parse_vec(const char *str);

@@ -23,7 +23,7 @@
 #include <fcntl.h>	// For file opening flags
 #include <stdio.h>	// For printf, perror
 
-void valid_file(char *file)
+int valid_file(char *file)
 {
 	char *extension;
 	int path_len;
@@ -33,10 +33,8 @@ void valid_file(char *file)
 	path_len = ft_strlen(file);
 	ext_len = ft_strlen(extension);
 	if (path_len < ext_len || !ft_strnstr(file + path_len - ext_len, extension, path_len))
-	{
-		printf("Error\nThe file does have the '.rt' extension.\n");
-		exit(1);
-	}
+		return (1);
+  return (0);
 }
 
 void parse_file(const char *filename, t_scene_data *data)

@@ -17,16 +17,26 @@
 #include "input.h"
 #include "vector.h"
 #include "utilities.h"
+#include "parsing.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-int main()
+int main(int argc, char *argv[])
 {
 	t_data *data;
 
-	printf("start\n");
-	data = initiateData();
+	
+  if (argc != 2 || valid_file(argv[1]) == 1)
+  {
+    printf("Error: Could not Open file or no file given as input.\n");
+    return (1);
+  }
+
+  printf("start\n");
+
+  data = initiateData();
+  parse_file(argv[1], &data->scene_data);
 	setHooks(data);
 
 	renderImage(data);

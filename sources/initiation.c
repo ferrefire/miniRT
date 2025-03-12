@@ -63,7 +63,7 @@ void	initiateScene(t_scene_data *data)
 	data->shapes.cylinders = NULL;
 	data->shapes.cylinderCount = 0;
 
-  parse_file("scenes/valid/snowman.rt", data);
+  //parse_file("scenes/invalid/duplicate_camera.rt", data);
 
 	//data->light.source = normalize((t_vec){1, 1, -1});
 	data->camera.fov = 45;
