@@ -62,14 +62,8 @@ void	initiateScene(t_scene_data *data)
 	data->shapes.planeCount = 0;
 	data->shapes.cylinders = NULL;
 	data->shapes.cylinderCount = 0;
-	data->shapes.cones = NULL;
-	data->shapes.coneCount = 0;
-	data->shapes.triangles = NULL;
-	data->shapes.triangleCount = 0;
-	data->shapes.discs = NULL;
-	data->shapes.discCount = 0;
 
-	parse_file("scenes/valid/snowman.rt", data);
+  parse_file("scenes/valid/snowman.rt", data);
 
 	//data->light.source = normalize((t_vec){1, 1, -1});
 	data->camera.fov = 45;

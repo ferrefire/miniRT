@@ -44,6 +44,7 @@ void parse_file(const char *filename, t_scene_data *data)
 	int fd;
 	char *line;
 
+  printf("initiaiting parse\n\n\n\n");
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
@@ -60,6 +61,7 @@ void parse_file(const char *filename, t_scene_data *data)
 		parse_line(line, data);
 		free(line);
 	}
+  printf("PARSING COMPLETE\n");
 	close(fd);
 }
 

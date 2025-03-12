@@ -17,8 +17,8 @@
 #include "scene.h"
 #include "shapes.h"
 
-#define WIDTH 800
-#define HEIGHT 800
+#define WIDTH 10
+#define HEIGHT 10
 
 typedef struct s_mlx_data
 {

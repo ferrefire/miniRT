@@ -13,15 +13,27 @@
 #include "mlx.h"
 #include "minirt.h"
 #include "cleaning.h"
+#include "utilities.h"
 
 #include <stdlib.h>
 #include <stdio.h>
+
+void cleanShapes(t_shapes *shapes)
+{
+    if (shapes->spheres)
+      free_memory(shapes->spheres);
+    if (shapes->planes)
+      free_memory(shapes->planes);
+    if (shapes->cylinders)
+      free_memory(shapes->cylinders);
+}
 
 void	cleanData(t_data *data)
 {
 	printf("cleaning...\n");
 	cleanMLX(&data->mlx_data);
-	clear(&data);
+  cleanShapes(&data->scene_data.shapes);
+  clear(&data);
 }
 
 void	cleanMLX(t_mlx_data *data)
@@ -47,9 +59,7 @@ void	clear(void *address)
 	if (memory != NULL)
 	{
 		if (*memory != NULL)
-		{
 			free(*memory);
-		}
 		*memory = NULL;
 	}
 }
@@ -58,7 +68,7 @@ void free_tokens(char **tokens)
 {
 	int i;
 
-	i = 0;
+i = 0;
 	if (!tokens)
 		return;
 	while (tokens[i] != NULL)
