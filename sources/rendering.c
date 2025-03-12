@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 20:18:41 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/12 22:04:12 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/12 23:49:10 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,59 @@ int renderImage(t_data *data)
 		data->x = 0;
 		data->y += 1;
 		if (data->y >= HEIGHT)
-			printf("image rendered!\n");
+		{
+			printf("image rendered in %ld seconds\n", (time(NULL) - data->start));
+		}
 	}
 
 	return (0);
 }
+
+t_vec traceRay(t_ray ray, t_scene_data scene)
+{
+	t_hit hitInfo;
+	float inter;
+
+	inter = 0.0;
+	while (inter <= 1.0)
+	{
+		hitInfo = checkIntersections(ray, scene);
+		if (hitInfo.intersected)
+		{
+			t_vec lightNormal = normalize(sub(scene.light.source, ray.position));
+			float shadow = inShadow((t_ray){ray.position, lightNormal, ray.position, scene.light.source}, scene);
+			//float shadow = 1.0;
+			float lightDistance = 1.0;
+			float diffuse = clamp(dot(hitInfo.normal, lightNormal) * lightDistance * shadow, scene.ambient.intensity, 1.0);
+			return (mult(hitInfo.color, diffuse));
+		}
+		float closest = closestShape(ray.position, scene);
+		inter += scene.step * clamp(closest, 1.0, 100.0);
+		ray.position = lerp(ray.origin, ray.target, inter);
+	}
+
+	return (BLACK);
+}
+
+/*float inShadow(t_ray ray, t_scene_data scene)
+{
+	t_hit hitInfo;
+	float inter;
+
+	inter = scene.step * 25.0;
+	ray.position = lerp(ray.origin, ray.target, inter);
+	while (inter <= 1.0)
+	{
+		hitInfo = checkIntersections(ray, scene);
+		if (hitInfo.intersected)
+			return (0.0);
+		float closest = closestShape(ray.position, scene);
+		inter += scene.step * clamp(closest, 1.0, 100.0);
+		ray.position = lerp(ray.origin, ray.target, inter);
+	}
+
+	return (1.0);
+}*/
 
 /*void renderImage(t_data *data)
 {
@@ -73,7 +121,7 @@ int renderImage(t_data *data)
 	mlx_loop(data->mlx_data.mlx);
 }*/
 
-t_vec traceRay(t_ray ray, t_scene_data scene)
+/*t_vec traceRay(t_ray ray, t_scene_data scene)
 {
 	t_hit hitInfo;
 	int iterations;
@@ -85,7 +133,8 @@ t_vec traceRay(t_ray ray, t_scene_data scene)
 		if (hitInfo.intersected)
 		{
 			t_vec lightNormal = normalize(sub(scene.light.source, ray.position));
-			float shadow = inShadow((t_ray){ray.position, lightNormal}, scene);
+			//float shadow = inShadow((t_ray){ray.position, lightNormal}, scene);
+			float shadow = 1;
 			//float lightDistance = 1.0 - clamp(distance(ray.position, scene.light.source) / 75.0, 0.0, 1.0);
 			//lightDistance *= lightDistance;
 			//lightDistance *= lightDistance;
@@ -98,7 +147,7 @@ t_vec traceRay(t_ray ray, t_scene_data scene)
 	}
 	
 	return (BLACK);
-}
+}*/
 
 float inShadow(t_ray ray, t_scene_data scene)
 {
@@ -139,6 +188,7 @@ t_hit checkIntersections(t_ray ray, t_scene_data scene)
 		}
 		i++;
 	}
+
 	i = 0;
 	while (i < scene.shapes.sphereCount)
 	{
@@ -151,6 +201,7 @@ t_hit checkIntersections(t_ray ray, t_scene_data scene)
 		}
 		i++;
 	}
+
 	i = 0;
 	while (i < scene.shapes.cylinderCount)
 	{

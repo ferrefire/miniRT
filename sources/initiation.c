@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/02/19 17:55:00 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/12 20:21:01 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/12 23:34:32 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_data	*initiateData(void)
 
 	printf("initiating...\n");
 	data = malloc(sizeof(t_data));
+	data->start = time(NULL);
 	data->x = 0;
 	data->y = 0;
 	initiateScene(&data->scene_data);
@@ -64,6 +65,9 @@ void	initiateScene(t_scene_data *data)
 	data->shapes.planeCount = 0;
 	data->shapes.cylinders = NULL;
 	data->shapes.cylinderCount = 0;
+
+	data->step = 0.001;
+	data->camera.far = 50.0;
 
     //parse_file("scenes/invalid/duplicate_camera.rt", data);
 

@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 21:25:15 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/12 16:31:27 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/12 23:10:22 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ typedef struct s_ray
 {
 	t_vec position;
 	t_vec direction;
+	t_vec origin;
+	t_vec target;
 	//t_vec color;
 } t_ray;
 
