@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/11 14:02:36 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 14:55:40 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/12 15:30:54 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_sphere
 	t_vec color;
 	t_vec center;
 	float radius;
+	float radiusSquared;
 } t_sphere;
 
 typedef struct s_plane

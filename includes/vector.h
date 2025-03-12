@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 21:26:28 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/10 23:11:26 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/12 15:30:06 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_vec add(t_vec a, t_vec b);
 t_vec sub(t_vec a, t_vec b);
 t_vec mult(t_vec a, float b);
 float distance(t_vec a, t_vec b);
+float distanceSquared(t_vec a, t_vec b);
 float dot(t_vec a, t_vec b);
 
 #endif

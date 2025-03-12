@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/11 14:42:55 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 15:10:05 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/12 15:31:29 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void parse_sphere(char **tokens, t_shapes *shapes)
 	sphere->type = 1;
 	sphere->center = parse_vec(tokens[1]);
 	sphere->radius = atof(tokens[2]);
+	sphere->radiusSquared = sphere->radius * sphere->radius;
 	sphere->color = parse_vec(tokens[3]);
 
 	if (sphere->radius <= 0)
