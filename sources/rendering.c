@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 20:18:41 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/12 16:50:47 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/12 21:51:47 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,28 @@ void renderPixel(int x, int y, t_vec color, t_data *data)
 	mlx_pixel_put(data->mlx_data.mlx, data->mlx_data.win, x, y, colorToInt(color));
 }
 
-void renderImage(t_data *data)
+int renderImage(t_data *data)
+{
+	if (data->y >= HEIGHT) return (1);
+
+	t_ray currentRay = initiateRay(data->x, data->y, data->scene_data.camera);
+	t_vec pixelColor = traceRay(currentRay, data->scene_data);
+	renderPixel(data->x, data->y, pixelColor, data);
+
+	data->x += 1;
+
+	if (data->x >= WIDTH)
+	{
+		data->x = 0;
+		data->y += 1;
+		if (data->y >= HEIGHT)
+			printf("image rendered!\n");
+	}
+
+	return (0);
+}
+
+/*void renderImage(t_data *data)
 {
 	int x;
 	int y;
@@ -50,7 +71,7 @@ void renderImage(t_data *data)
 	}
 	printf("image rendered!\n");
 	mlx_loop(data->mlx_data.mlx);
-}
+}*/
 
 t_vec traceRay(t_ray ray, t_scene_data scene)
 {
@@ -58,18 +79,20 @@ t_vec traceRay(t_ray ray, t_scene_data scene)
 	int iterations;
 
 	iterations = 0;
-	while (iterations < 500)
+	while (iterations < 1000)
 	{
 		hitInfo = checkIntersections(ray, scene);
 		if (hitInfo.intersected)
 		{
 			t_vec lightNormal = normalize(sub(scene.light.source, ray.position));
 			float shadow = inShadow((t_ray){ray.position, lightNormal}, scene);
-			float lightDistance = 1.0 - clamp(distance(ray.position, scene.light.source) / 200.0, 0.0, 1.0);
+			float lightDistance = 1.0 - clamp(distance(ray.position, scene.light.source) / 75.0, 0.0, 1.0);
+			lightDistance *= lightDistance;
+			lightDistance *= lightDistance;
 			float diffuse = clamp(dot(hitInfo.normal, lightNormal) * lightDistance * shadow, scene.ambient.intensity, 1.0);
 			return (mult(hitInfo.color, diffuse));
 		}
-		ray.position = add(ray.position, mult(ray.direction, 0.1));
+		ray.position = add(ray.position, mult(ray.direction, 0.05));
 		iterations++;
 	}
 	
@@ -83,14 +106,14 @@ float inShadow(t_ray ray, t_scene_data scene)
 
 	iterations = 0;
 	ray.position = add(ray.position, mult(ray.direction, 0.5));
-	while (iterations < 100)
+	while (iterations < 500)
 	{
 		if (distance(ray.position, scene.light.source) <= 1.0)
 			break;
 		hitInfo = checkIntersections(ray, scene);
 		if (hitInfo.intersected)
 			return (0.0);
-		ray.position = add(ray.position, mult(ray.direction, 0.25));
+		ray.position = add(ray.position, mult(ray.direction, 0.1));
 		iterations++;
 	}
 
@@ -109,7 +132,8 @@ t_hit checkIntersections(t_ray ray, t_scene_data scene)
 		{
 			hitInfo.intersected = 1;
 			hitInfo.color = scene.shapes.planes[i].color;
-			hitInfo.normal = scene.shapes.planes[i].normal;
+			//hitInfo.normal = scene.shapes.planes[i].normal;
+			hitInfo.normal = normalize(sub(scene.light.source, ray.position));
 			return (hitInfo);
 		}
 		i++;
@@ -123,6 +147,19 @@ t_hit checkIntersections(t_ray ray, t_scene_data scene)
 			hitInfo.color = scene.shapes.spheres[i].color;
 			hitInfo.normal = normalize(sub(ray.position, scene.shapes.spheres[i].center));
 			return (hitInfo);
+		}
+		i++;
+	}
+	i = 0;
+	while (i < scene.shapes.cylinderCount)
+	{
+		t_hit cylinderHit = intersectingCylinder(ray.position, scene.shapes.cylinders[i]);
+		if (cylinderHit.intersected)
+		{
+			//hitInfo.intersected = 1;
+			//hitInfo.color = scene.shapes.cylinders[i].color;
+			//hitInfo.normal = (t_vec){-1, 0, 0};
+			return (cylinderHit);
 		}
 		i++;
 	}

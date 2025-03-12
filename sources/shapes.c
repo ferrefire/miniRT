@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/11 14:42:55 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/12 15:31:29 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/12 21:26:22 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "parsing.h"
 #include "libft.h"
 #include "utilities.h"
+#include "vector.h"
 
 #include <math.h>
 #include <stdio.h>
@@ -55,7 +56,7 @@ void parse_sphere(char **tokens, t_shapes *shapes)
 	sphere = &shapes->spheres[shapes->sphereCount];
 	sphere->type = 1;
 	sphere->center = parse_vec(tokens[1]);
-	sphere->radius = ft_atof(tokens[2]);
+	sphere->radius = ft_atof(tokens[2]) * 0.5;
 	sphere->color = parse_vec(tokens[3]);
 
 	if (sphere->radius <= 0)
@@ -129,8 +130,8 @@ void parse_cylinder(char **tokens, t_shapes *shapes)
 	cylinder = &shapes->cylinders[shapes->cylinderCount];
 	cylinder->type = 3; // Type identifier for cylinder
 	cylinder->position = parse_vec(tokens[1]);
-	cylinder->axis = parse_vec(tokens[2]);
-	cylinder->radius = atof(tokens[3]);
+	cylinder->axis = normalize(parse_vec(tokens[2]));
+	cylinder->radius = atof(tokens[3]) * 0.5;
 	cylinder->height = atof(tokens[4]);
 	cylinder->color = parse_vec(tokens[5]);
 
