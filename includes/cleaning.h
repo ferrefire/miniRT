@@ -20,4 +20,5 @@ void	cleanMLX(t_mlx_data *data);
 void	clear(void *address);
 void	free_tokens(char **tokens);
 
+
 #endif

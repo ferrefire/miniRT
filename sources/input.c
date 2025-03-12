@@ -23,7 +23,6 @@ int	keyPressed(int keycode, t_data *data)
 		mlx_loop_end(data->mlx_data.mlx);
 	//else
 	//	printf("key pressed: %i\n", keycode);
-
 	return (keycode);
 }
 
