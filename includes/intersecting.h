@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 22:48:45 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/13 00:22:26 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/13 15:59:01 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 #include "vector.h"
 #include "rendering.h"
 
-int intersectingSphere(t_vec point, t_sphere sphere);
-int intersectingPlane(t_vec point, t_plane plane);
+t_hit intersectingSphere(t_vec point, t_sphere sphere);
+t_hit intersectingPlane(t_vec point, t_plane plane);
 t_hit intersectingCylinder(t_vec point, t_cylinder cylinder);
 float closestSphere(t_vec point, t_scene_data scene);
 float closestCylinder(t_vec point, t_scene_data scene);

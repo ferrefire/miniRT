@@ -16,7 +16,7 @@ NAME = miniRT
 
 .PHONY: run clean fclean re
 
-$(NAME): $(LIBFT) $(MLX) $(OBJ) $(DEPS)
+$(NAME): $(DEPS) $(OBJ) $(LIBFT) $(MLX)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LDFLAGS)
 
 $(OBJDIR)%.o: %.c*
@@ -24,7 +24,7 @@ $(OBJDIR)%.o: %.c*
 	$(CC) $(CFLAGS) -c $^ -o $@
 
 $(LIBFT):
-	$(MAKE) all -C external/libft
+	$(MAKE) -C external/libft
 
 $(MLX):
 	$(MAKE) all -C external/minilibx

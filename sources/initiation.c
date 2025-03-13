@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/02/19 17:55:00 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/13 01:55:36 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/13 15:44:02 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ void	initiateScene(t_scene_data *data)
 	data->shapes.cylinders = NULL;
 	data->shapes.cylinderCount = 0;
 
-	data->step = 0.001;
+	data->step = 0.005;
+	//data->step = 0.001;
 	data->camera.far = 50.0;
 
     //parse_file("scenes/invalid/duplicate_camera.rt", data);
