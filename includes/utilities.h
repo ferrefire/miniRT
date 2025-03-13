@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 21:37:01 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/13 00:29:49 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/13 16:49:55 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ void  *memory_realloc(void *ptr, size_t old_size, size_t new_size);
 void  free_memory(void *buffer);
 void  *allocate_memory(size_t buffer_size);  
 double  ft_atof(const char *str);
+//float pow(float value, int power);
 
 #endif

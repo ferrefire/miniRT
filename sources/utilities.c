@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 21:37:59 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/13 00:30:49 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/13 16:50:00 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,3 +119,17 @@ void	*memory_realloc(void *ptr, size_t old_size, size_t new_size)
 	free_memory(ptr);
 	return (new_ptr);
 }
+
+/*float pow(float value, int power)
+{
+	int i;
+
+	i = 0;
+	while (i < power)
+	{
+		value *= value;
+		i++;
+	}
+	
+	return (value);
+}*/
