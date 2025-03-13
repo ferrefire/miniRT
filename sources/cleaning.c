@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/02/19 17:59:01 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/11 14:56:33 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/13 19:41:36 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ void	cleanMLX(t_mlx_data *data)
 	printf("cleaning mlx...\n");
 	if (data->mlx)
 	{
+		if (data->image_data.image)
+		{
+			mlx_destroy_image(data->mlx, data->image_data.image);
+		}
 		if (data->win)
 		{
 			mlx_clear_window(data->mlx, data->win);

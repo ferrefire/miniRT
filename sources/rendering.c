@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 20:18:41 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/13 16:55:33 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/13 19:52:28 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,14 @@ int colorToInt(t_vec color)
 
 void renderPixel(int x, int y, t_vec color, t_data *data)
 {
-	mlx_pixel_put(data->mlx_data.mlx, data->mlx_data.win, x, y, colorToInt(color));
+	char *dst;
+
+	//mlx_pixel_put(data->mlx_data.mlx, data->mlx_data.win, x, y, colorToInt(color));
+
+	dst = data->mlx_data.image_data.address + (y * data->mlx_data.image_data.line + x * (data->mlx_data.image_data.bpp / 8));
+	*(unsigned int *)dst = colorToInt(color);
+
+	//mlx_put_image_to_window(data->mlx_data.mlx, data->mlx_data.win, data->mlx_data.image_data.image, 0, 0);
 }
 
 int renderImage(t_data *data)
@@ -46,8 +53,10 @@ int renderImage(t_data *data)
 		data->y += 1;
 		if (data->y >= HEIGHT)
 		{
+			//mlx_put_image_to_window(data->mlx_data.mlx, data->mlx_data.win, data->mlx_data.image_data.image, 0, 0);
 			printf("image rendered in %ld seconds\n", (time(NULL) - data->start));
 		}
+		mlx_put_image_to_window(data->mlx_data.mlx, data->mlx_data.win, data->mlx_data.image_data.image, 0, 0);
 	}
 
 	return (0);

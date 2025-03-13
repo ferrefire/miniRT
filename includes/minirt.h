@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/02/19 17:26:12 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/13 17:07:01 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/13 20:17:47 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,25 @@
 #include "shapes.h"
 #include "time.h"
 
-#define WIDTH 400
-#define HEIGHT 400
+#define WIDTH 800
+#define HEIGHT 800
+
+typedef struct s_image_data
+{
+	void *image;
+	void *address;
+	int bpp;
+	int line;
+	int endian;
+} t_image_data;
 
 typedef struct s_mlx_data
 {
 	void *mlx;	// stores pointer returned by mlx init
 	void *win;	// stores pointer to window
-	//void *img;	// stores point created by mlx_new_image
 	int width;
 	int height;
+	t_image_data image_data;
 } t_mlx_data;
 
 typedef struct s_data
