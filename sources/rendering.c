@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 20:18:41 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/12 23:49:10 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/13 02:08:25 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ t_vec traceRay(t_ray ray, t_scene_data scene)
 			return (mult(hitInfo.color, diffuse));
 		}
 		float closest = closestShape(ray.position, scene);
+		//closest *= closest;
+		//closest *= closest;
 		inter += scene.step * clamp(closest, 1.0, 100.0);
 		ray.position = lerp(ray.origin, ray.target, inter);
 	}
@@ -78,7 +80,7 @@ t_vec traceRay(t_ray ray, t_scene_data scene)
 	return (BLACK);
 }
 
-/*float inShadow(t_ray ray, t_scene_data scene)
+float inShadow(t_ray ray, t_scene_data scene)
 {
 	t_hit hitInfo;
 	float inter;
@@ -91,12 +93,13 @@ t_vec traceRay(t_ray ray, t_scene_data scene)
 		if (hitInfo.intersected)
 			return (0.0);
 		float closest = closestShape(ray.position, scene);
-		inter += scene.step * clamp(closest, 1.0, 100.0);
+		//closest *= closest;
+		inter += (scene.step * 5.0) * clamp(closest, 1.0, 100.0);
 		ray.position = lerp(ray.origin, ray.target, inter);
 	}
 
 	return (1.0);
-}*/
+}
 
 /*void renderImage(t_data *data)
 {
@@ -149,7 +152,7 @@ t_vec traceRay(t_ray ray, t_scene_data scene)
 	return (BLACK);
 }*/
 
-float inShadow(t_ray ray, t_scene_data scene)
+/*float inShadow(t_ray ray, t_scene_data scene)
 {
 	t_hit hitInfo;
 	int iterations;
@@ -168,7 +171,7 @@ float inShadow(t_ray ray, t_scene_data scene)
 	}
 
 	return (1.0);
-}
+}*/
 
 t_hit checkIntersections(t_ray ray, t_scene_data scene)
 {
