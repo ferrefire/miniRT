@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 21:25:15 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/12 23:10:22 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/13 15:33:14 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_ray
 	t_vec direction;
 	t_vec origin;
 	t_vec target;
+	float max;
 	//t_vec color;
 } t_ray;
 

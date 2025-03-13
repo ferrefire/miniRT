@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 20:20:55 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/12 20:26:50 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/13 16:09:07 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@
 typedef struct s_hit
 {
 	int intersected;
+	t_vec position;
 	t_vec normal;
 	t_vec color;
+	float distance;
 } t_hit;
 
 int colorToInt(t_vec color);

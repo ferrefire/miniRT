@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 22:35:50 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/12 23:11:10 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/13 15:33:33 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_ray	initiateRay(int x, int y, t_camera camera)
 	result.position = camera.position;
 	result.origin = camera.position;
 	result.target = add(result.origin, mult(result.direction, camera.far));
+	result.max = camera.far;
 	//result.color = (t_vec){0, 0, 0};
 
 	return (result);

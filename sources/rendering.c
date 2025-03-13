@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 20:18:41 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/13 02:08:25 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/13 16:18:04 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "intersecting.h"
 #include "ray.h"
 #include "utilities.h"
+#include <math.h>
 
 #include <stdio.h>
 
@@ -55,26 +56,30 @@ int renderImage(t_data *data)
 t_vec traceRay(t_ray ray, t_scene_data scene)
 {
 	t_hit hitInfo;
-	float inter;
+	//float inter;
 
-	inter = 0.0;
-	while (inter <= 1.0)
+	//inter = 0.0;
+	//while (inter <= 1.0)
+	while (distanceSquared(ray.position, ray.origin) < scene.camera.far * scene.camera.far)
 	{
 		hitInfo = checkIntersections(ray, scene);
 		if (hitInfo.intersected)
 		{
 			t_vec lightNormal = normalize(sub(scene.light.source, ray.position));
-			float shadow = inShadow((t_ray){ray.position, lightNormal, ray.position, scene.light.source}, scene);
+			float shadow = inShadow((t_ray){ray.position, lightNormal, ray.position, scene.light.source, 
+				distance(ray.position, scene.light.source)}, scene);
+			// float shadow = inShadow((t_ray){ray.position, lightNormal, ray.position, scene.light.source}, scene);
 			//float shadow = 1.0;
 			float lightDistance = 1.0;
 			float diffuse = clamp(dot(hitInfo.normal, lightNormal) * lightDistance * shadow, scene.ambient.intensity, 1.0);
 			return (mult(hitInfo.color, diffuse));
 		}
-		float closest = closestShape(ray.position, scene);
-		//closest *= closest;
-		//closest *= closest;
-		inter += scene.step * clamp(closest, 1.0, 100.0);
-		ray.position = lerp(ray.origin, ray.target, inter);
+		// float closest = closestShape(ray.position, scene);
+		// inter += scene.step * clamp(closest, 1.0, 100.0);
+		// ray.position = lerp(ray.origin, ray.target, inter);
+		// float closest = clamp(closestShape(ray.position, scene), scene.step, scene.camera.far);
+		float closest = clamp(hitInfo.distance, scene.step, scene.camera.far);
+		ray.position = add(ray.position, mult(ray.direction, closest));
 	}
 
 	return (BLACK);
@@ -83,19 +88,28 @@ t_vec traceRay(t_ray ray, t_scene_data scene)
 float inShadow(t_ray ray, t_scene_data scene)
 {
 	t_hit hitInfo;
-	float inter;
+	int away = 0;
+	//float inter;
 
-	inter = scene.step * 25.0;
-	ray.position = lerp(ray.origin, ray.target, inter);
-	while (inter <= 1.0)
+	//inter = scene.step * 25.0;
+	//ray.position = lerp(ray.origin, ray.target, inter);
+	//while (inter <= 1.0)
+	ray.position = add(ray.position, mult(ray.direction, 0.1));
+	while (distanceSquared(ray.position, ray.origin) < ray.max * ray.max)
 	{
 		hitInfo = checkIntersections(ray, scene);
 		if (hitInfo.intersected)
 			return (0.0);
-		float closest = closestShape(ray.position, scene);
-		//closest *= closest;
-		inter += (scene.step * 5.0) * clamp(closest, 1.0, 100.0);
-		ray.position = lerp(ray.origin, ray.target, inter);
+		//if (away && hitInfo.intersected)
+		//	return (0.0);
+		//if (!away && !hitInfo.intersected)
+		//	away = 1;
+		//float closest = closestShape(ray.position, scene);
+		//inter += (scene.step * 5.0) * clamp(closest, 1.0, 100.0);
+		//ray.position = lerp(ray.origin, ray.target, inter);
+		//float closest = clamp(closestShape(ray.position, scene), scene.step, ray.max);
+		float closest = clamp(hitInfo.distance, scene.step, ray.max);
+		ray.position = add(ray.position, mult(ray.direction, closest));
 	}
 
 	return (1.0);
@@ -176,48 +190,43 @@ float inShadow(t_ray ray, t_scene_data scene)
 t_hit checkIntersections(t_ray ray, t_scene_data scene)
 {
 	t_hit hitInfo;
+	float closest;
 	int i;
 
+	closest = 10000.0;
 	i = 0;
 	while (i < scene.shapes.planeCount)
 	{
-		if (intersectingPlane(ray.position, scene.shapes.planes[i]))
-		{
-			hitInfo.intersected = 1;
-			hitInfo.color = scene.shapes.planes[i].color;
-			hitInfo.normal = scene.shapes.planes[i].normal;
-			//hitInfo.normal = normalize(sub(scene.light.source, ray.position));
+		hitInfo = intersectingPlane(ray.position, scene.shapes.planes[i]);
+		if (hitInfo.intersected)
 			return (hitInfo);
-		}
+		if (hitInfo.distance < closest)
+			closest = hitInfo.distance;
 		i++;
 	}
 
 	i = 0;
 	while (i < scene.shapes.sphereCount)
 	{
-		if (intersectingSphere(ray.position, scene.shapes.spheres[i]))
-		{
-			hitInfo.intersected = 1;
-			hitInfo.color = scene.shapes.spheres[i].color;
-			hitInfo.normal = normalize(sub(ray.position, scene.shapes.spheres[i].center));
+		hitInfo = intersectingSphere(ray.position, scene.shapes.spheres[i]);
+		if (hitInfo.intersected)
 			return (hitInfo);
-		}
+		if (hitInfo.distance < closest)
+			closest = hitInfo.distance;
 		i++;
 	}
 
 	i = 0;
 	while (i < scene.shapes.cylinderCount)
 	{
-		t_hit cylinderHit = intersectingCylinder(ray.position, scene.shapes.cylinders[i]);
-		if (cylinderHit.intersected)
-		{
-			//hitInfo.intersected = 1;
-			//hitInfo.color = scene.shapes.cylinders[i].color;
-			//hitInfo.normal = (t_vec){-1, 0, 0};
-			return (cylinderHit);
-		}
+		hitInfo = intersectingCylinder(ray.position, scene.shapes.cylinders[i]);
+		if (hitInfo.intersected)
+			return (hitInfo);
+		if (hitInfo.distance < closest)
+			closest = hitInfo.distance;
 		i++;
 	}
 	hitInfo.intersected = 0;
+	hitInfo.distance = closest;
 	return (hitInfo);
 }
