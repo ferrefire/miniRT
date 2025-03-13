@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 22:49:31 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/13 16:14:34 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/13 17:02:05 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,9 @@ t_hit intersectingCylinder(t_vec point, t_cylinder cylinder)
 	baseVec = sub(point, cylinder.position);
 	t = dot(baseVec, cylinder.axis);
 	//if (t < cylinder.height * -0.5 || t > cylinder.height * 0.5)
-	//	return (hitInfo);
-	axisVec = mult(cylinder.axis, t);
+	//	hitInfo.intersected = -1;
+	//t = clamp(t, cylinder.height * -0.5, cylinder.height * 0.5);
+	axisVec = mult(cylinder.axis, clamp(t, cylinder.height * -0.5, cylinder.height * 0.5));
 	axisPoint = add(cylinder.position, axisVec);
 	cylinderDistance = distance(point, axisPoint) - cylinder.radius;
 	if (cylinderDistance <= 0.0 && t >= cylinder.height * -0.5 && t <= cylinder.height * 0.5)

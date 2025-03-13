@@ -6,13 +6,14 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 21:30:45 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/12 23:09:53 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/13 16:46:09 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "vector.h"
 #include "math.h"
+#include "utilities.h"
 
 float length(t_vec vec)
 {
@@ -110,4 +111,14 @@ float dot(t_vec a, t_vec b)
 t_vec lerp(t_vec a, t_vec b, float x)
 {
 	return (add(mult(a, 1.0 - x), mult(b, x)));
+}
+
+t_vec clampVec(t_vec a, float min, float max)
+{
+	t_vec result;
+
+	result.x = clamp(a.x, min, max);
+	result.y = clamp(a.y, min, max);
+	result.z = clamp(a.z, min, max);
+	return (result);
 }

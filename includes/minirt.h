@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/02/19 17:26:12 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/13 16:21:56 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/13 17:07:01 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 #include "shapes.h"
 #include "time.h"
 
-#define WIDTH 800
-#define HEIGHT 800
+#define WIDTH 400
+#define HEIGHT 400
 
 typedef struct s_mlx_data
 {

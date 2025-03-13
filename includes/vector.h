@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 21:26:28 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/12 23:08:34 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/13 16:45:15 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ float distance(t_vec a, t_vec b);
 float distanceSquared(t_vec a, t_vec b);
 float dot(t_vec a, t_vec b);
 t_vec lerp(t_vec a, t_vec b, float x);
+t_vec clampVec(t_vec a, float min, float max);
 
 #endif

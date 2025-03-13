@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 20:18:41 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/13 16:18:04 by ferre         ########   odam.nl         */
+/*   Updated: 2025/03/13 16:55:33 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,15 @@ t_vec traceRay(t_ray ray, t_scene_data scene)
 			//float shadow = 1.0;
 			float lightDistance = 1.0;
 			float diffuse = clamp(dot(hitInfo.normal, lightNormal) * lightDistance * shadow, scene.ambient.intensity, 1.0);
-			return (mult(hitInfo.color, diffuse));
+			t_vec specularColor = BLACK;
+			//if (shadow > 0.0)
+			{
+				t_vec reflectionNormal = sub(mult(hitInfo.normal, 2.0 * dot(lightNormal, hitInfo.normal)), lightNormal);
+				float specular = clamp(dot(mult(ray.direction, -1.0), reflectionNormal), 0.0, 1.0);
+				specular = pow(specular, 4.0);
+				specularColor = mult(WHITE, specular);
+			}
+			return (clampVec(mult(add(hitInfo.color, specularColor), diffuse), 0.0, 255.0));
 		}
 		// float closest = closestShape(ray.position, scene);
 		// inter += scene.step * clamp(closest, 1.0, 100.0);
