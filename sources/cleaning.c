@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   cleaning.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ferre <ferre@student.codam.nl>               +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/02/19 17:59:01 by ferre         #+#    #+#                 */
-/*   Updated: 2025/03/13 19:41:36 by ferre         ########   odam.nl         */
-/*                                                                            */
+/*																			  */
+/*														  ::::::::			  */
+/*	 cleaning.c											:+:    :+:			  */
+/*													   +:+					  */
+/*	 By: ferre <ferre@student.codam.nl>				  +#+					  */
+/*													 +#+					  */
+/*	 Created: 2025/02/19 17:59:01 by ferre		   #+#	  #+#				  */
+/*	 Updated: 2025/03/13 19:41:36 by ferre		   ########   odam.nl		  */
+/*																			  */
 /* ************************************************************************** */
 
 #include "mlx.h"
@@ -18,25 +18,25 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void cleanShapes(t_shapes *shapes)
+void	clean_shapes(t_shapes *shapes)
 {
-    if (shapes->spheres)
-      free_memory(shapes->spheres);
-    if (shapes->planes)
-      free_memory(shapes->planes);
-    if (shapes->cylinders)
-      free_memory(shapes->cylinders);
+	if (shapes->spheres)
+		free_memory(shapes->spheres);
+	if (shapes->planes)
+		free_memory(shapes->planes);
+	if (shapes->cylinders)
+		free_memory(shapes->cylinders);
 }
 
-void	cleanData(t_data *data)
+void	clean_data(t_data *data)
 {
 	printf("cleaning...\n");
-	cleanMLX(&data->mlx_data);
-  cleanShapes(&data->scene_data.shapes);
-  clear(&data);
+	clean_mlx(&data->mlx_data);
+	clean_shapes(&data->scene_data.shapes);
+	clear(&data);
 }
 
-void	cleanMLX(t_mlx_data *data)
+void	clean_mlx(t_mlx_data *data)
 {
 	printf("cleaning mlx...\n");
 	if (data->mlx)
@@ -68,13 +68,13 @@ void	clear(void *address)
 	}
 }
 
-void free_tokens(char **tokens)
+void	free_tokens(char **tokens)
 {
-	int i;
+	int	i;
 
-  i = 0;
+	i = 0;
 	if (!tokens)
-		return;
+		return ;
 	while (tokens[i] != NULL)
 	{
 		free(tokens[i]);

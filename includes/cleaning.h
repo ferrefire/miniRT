@@ -11,14 +11,13 @@
 /* ************************************************************************** */
 
 #ifndef CLEANING_H
-#define CLEANING_H
+# define CLEANING_H
 
-#include "minirt.h"
+# include "minirt.h"
 
-void	cleanData(t_data *data);
-void	cleanMLX(t_mlx_data *data);
+void	clean_data(t_data *data);
+void	clean_mlx(t_mlx_data *data);
 void	clear(void *address);
 void	free_tokens(char **tokens);
-
 
 #endif

@@ -17,21 +17,24 @@
 #include <stddef.h>
 #include <stdio.h>
 
-void printVector(t_vec vec)
+void	print_vector(t_vec vec)
 {
 	printf("x: %f\ty: %f\tz: %f\n", vec.x, vec.y, vec.z);
 }
 
-float clamp(float value, float min, float max)
+float	clamp(float value, float min, float max)
 {
-	if (value < min) return (min);
-	else if (value > max) return (max);
-	else return (value);
+	if (value < min)
+		return (min);
+	else if (value > max)
+		return (max);
+	else
+		return (value);
 }
 
-float abso(float value)
+float	abso(float value)
 {
-	if (value >= 0.0) 
+	if (value >= 0.0)
 		return (value);
 	else
 		return (value * -1.0);
@@ -43,7 +46,7 @@ void	*allocate_memory(size_t buffer_size)
 
 	buffer = (void *)malloc(buffer_size);
 	if (!buffer)
-    return (NULL);
+		return (NULL);
 	return (buffer);
 }
 
@@ -56,48 +59,44 @@ void	free_memory(void *buffer)
 	}
 }
 
-double ft_atof(const char *str)
+double	ft_atof(const char *str)
 {
-  double result;
-  double sign;
-  double divisor;
+	double	result;
+	double	sign;
+	double	divisor;
 
-  result = 0.0;
-  sign = 1.0;
-  divisor = 10.0;
-
-  if (*str == '-')
-  {
-    sign = -1.0;
-    str++;
-  }
-  
-  else if (*str == '+')
-    str++;
-  
-  while (*str >= '0' && *str <= '9')
-  {
-    result = result * 10.0 + (*str - '0');
-    str++;
-  }
-
-  if (*str == '.')
-  {
-    str++;
-    while (*str >= '0' && *str <= '9')
-    {
-      result += (*str - '0') / divisor;
-      divisor *= 10.0;
-      str++;
-    }
-  }
-  return (sign * result);
+	result = 0.0;
+	sign = 1.0;
+	divisor = 10.0;
+	if (*str == '-')
+	{
+		sign = -1.0;
+		str++;
+	}
+	else if (*str == '+')
+		str++;
+	while (*str >= '0' && *str <= '9')
+	{
+		result = result * 10.0 + (*str - '0');
+		str++;
+	}
+	if (*str == '.')
+	{
+		str++;
+		while (*str >= '0' && *str <= '9')
+		{
+			result += (*str - '0') / divisor;
+			divisor *= 10.0;
+			str++;
+		}
+	}
+	return (sign * result);
 }
 
 void	*memory_realloc(void *ptr, size_t old_size, size_t new_size)
 {
-	void      *new_ptr;
-  size_t    copy_size;
+	void	*new_ptr;
+	size_t	copy_size;
 
 	if (new_size == 0)
 	{
@@ -109,27 +108,11 @@ void	*memory_realloc(void *ptr, size_t old_size, size_t new_size)
 	new_ptr = allocate_memory(new_size);
 	if (new_ptr == NULL)
 		return (NULL);
-
-  if (old_size < new_size)
-    copy_size = old_size;
-  else
-    copy_size = new_size;
-
+	if (old_size < new_size)
+		copy_size = old_size;
+	else
+		copy_size = new_size;
 	ft_memcpy(new_ptr, ptr, copy_size);
 	free_memory(ptr);
 	return (new_ptr);
 }
-
-/*float pow(float value, int power)
-{
-	int i;
-
-	i = 0;
-	while (i < power)
-	{
-		value *= value;
-		i++;
-	}
-	
-	return (value);
-}*/

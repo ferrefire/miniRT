@@ -17,17 +17,15 @@
 
 #include <stdio.h>
 
-int	keyPressed(int keycode, t_data *data)
+int	key_pressed(int keycode, t_data *data)
 {
 	if (keycode == KEY_ESC)
 		mlx_loop_end(data->mlx_data.mlx);
-	//else
-	//	printf("key pressed: %i\n", keycode);
 	return (keycode);
 }
 
-void setHooks(t_data *data)
+void	set_hooks(t_data *data)
 {
-	mlx_hook(data->mlx_data.win, 2, 1L << 0, keyPressed, data);
+	mlx_hook(data->mlx_data.win, 2, 1L << 0, key_pressed, data);
 	mlx_hook(data->mlx_data.win, 17, 1L << 0, mlx_loop_end, data->mlx_data.mlx);
 }

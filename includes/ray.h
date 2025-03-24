@@ -11,21 +11,20 @@
 /* ************************************************************************** */
 
 #ifndef RAY_H
-#define RAY_H
+# define RAY_H
 
-#include "minirt.h"
-#include "vector.h"
+# include "minirt.h"
+# include "vector.h"
 
 typedef struct s_ray
 {
-	t_vec position;
-	t_vec direction;
-	t_vec origin;
-	t_vec target;
-	float max;
-	//t_vec color;
-} t_ray;
+	t_vec	position;
+	t_vec	direction;
+	t_vec	origin;
+	t_vec	target;
+	float	max;
+}	t_ray;
 
-t_ray initiateRay(int x, int y, t_camera camera);
+t_ray	initiate_ray(int x, int y, t_camera camera);
 
 #endif
