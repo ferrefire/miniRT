@@ -32,7 +32,8 @@ int	valid_file(char *file)
 	extension = ".rt";
 	path_len = ft_strlen(file);
 	ext_len = ft_strlen(extension);
-	if (path_len < ext_len || !ft_strnstr(file + path_len - ext_len, extension, path_len))
+	if (path_len < ext_len
+		|| !ft_strnstr(file + path_len - ext_len, extension, path_len))
 		return (1);
 	return (0);
 }
@@ -49,15 +50,18 @@ void	parse_file(const char *filename, t_scene_data *data)
 		perror("Error opening file");
 		exit(EXIT_FAILURE);
 	}
-	while ((line = get_next_line(fd)) != NULL)
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
 		if (line[0] == '\0' || line[0] == '\n' || line[0] == '#')
 		{
 			free(line);
-			continue;
+			line = get_next_line(fd);
+			continue ;
 		}
 		parse_line(line, data);
 		free(line);
+		line = get_next_line(fd);
 	}
 	printf("PARSING COMPLETE\n");
 	close(fd);
@@ -69,7 +73,7 @@ void	parse_line(char *line, t_scene_data *scene)
 
 	tokens = ft_split(line, ' ');
 	if (!tokens || !tokens[0])
-		return;
+		return ;
 	if (ft_strncmp(tokens[0], "A", ft_strlen("A") + 1) == 0)
 		parse_ambient(tokens, scene);
 	else if (ft_strncmp(tokens[0], "C", ft_strlen("C") + 1) == 0)

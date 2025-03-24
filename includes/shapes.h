@@ -42,7 +42,7 @@ typedef struct s_cylinder
 	t_vec	position;
 	t_vec	axis;
 	float	radius;
-	float	height;
+	float	h;
 }	t_cylinder;
 
 typedef struct s_cone

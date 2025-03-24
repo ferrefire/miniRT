@@ -25,4 +25,26 @@ float	closest_cylinder(t_vec point, t_scene_data scene);
 float	closest_plane(t_vec point, t_scene_data scene);
 float	closest_shape(t_vec point, t_scene_data scene);
 
+typedef struct s_axis_vecs
+{
+	t_vec	base_vec;
+	t_vec	axis_vec;
+	t_vec	axis_p;
+}	t_axis_vecs;
+
+typedef struct s_closest_vectors
+{
+	t_vec		closest_cylinder;
+	float		closest_distance;
+	float		closest_radius;
+	float		current_distance;
+	t_axis_vecs	v;
+}	t_closest_vectors;
+
+typedef struct s_var
+{
+	int		i;
+	float	t;
+}	t_var;
+
 #endif

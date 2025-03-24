@@ -142,22 +142,3 @@ void	parse_cylinder(char **tokens, t_shapes *shapes)
 		exit(1);
 	}
 }
-
-void	parse_shape(char **tokens, t_shapes *shapes)
-{
-	if (ft_strncmp(tokens[0], "cy", ft_strlen("cy")) == 0)
-	{
-		parse_cylinder(tokens, shapes);
-		shapes->cylinder_count++;
-	}
-	else if (ft_strncmp(tokens[0], "sp", ft_strlen("sp")) == 0)
-	{
-		parse_sphere(tokens, shapes);
-		shapes->sphere_count++;
-	}
-	else if (ft_strncmp(tokens[0], "pl", ft_strlen("pl")) == 0)
-	{
-		parse_plane(tokens, shapes);
-		shapes->plane_count++;
-	}
-}

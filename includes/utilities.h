@@ -24,4 +24,11 @@ void	free_memory(void *buffer);
 void	*allocate_memory(size_t buffer_size);
 double	ft_atof(const char *str);
 
+typedef struct s_atof
+{
+	double	result;
+	double	sign;
+	double	divisor;
+}	t_atof;
+
 #endif
