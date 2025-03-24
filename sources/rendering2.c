@@ -50,8 +50,7 @@ t_hit	check_intersections(t_ray ray, t_scene_data scene)
 	i = 0;
 	while (i < scene.shapes.cylinder_count)
 	{
-		hit_info = intersecting_cylinder(ray.position,
-				scene.shapes.cylinders[i]);
+		hit_info = intersecting_cylinder(ray.position, scene.shapes.cylinders[i]);
 		if (hit_info.intersected)
 			return (hit_info);
 		if (hit_info.distance < closest)

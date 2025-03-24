@@ -32,11 +32,28 @@ typedef struct s_hit
 	float	distance;
 }	t_hit;
 
+typedef	struct s_floats
+{
+	float	shadow;
+	float	light_distance;
+	float	diffuse;
+	float	closest;
+	float	specular;
+}	t_floats;
+
+typedef struct s_vecs
+{
+	t_vec	light_normal;
+	t_vec	specular_color;
+	t_vec	reflection_normal;
+}	t_vecs;
+
 int		color_to_int(t_vec color);
 void	render_pixel(int x, int y, t_vec color, t_data *data);
 int		render_image(t_data *data);
 t_vec	trace_ray(t_ray ray, t_scene_data scene);
 float	in_shadow(t_ray ray, t_scene_data scene);
 t_hit	check_intersections(t_ray ray, t_scene_data scene);
-
+t_hit	check_shape_intersections(t_ray ray, void *shapes, int count,
+				t_hit (*intersect_func)(t_vec, void *));
 #endif
