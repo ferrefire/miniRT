@@ -17,44 +17,53 @@
 #include <stddef.h>
 #include <stdio.h>
 
-void	print_vector(t_vec vec)
+double	ft_atof(const char *str)
 {
-	printf("x: %f\ty: %f\tz: %f\n", vec.x, vec.y, vec.z);
-}
+	t_atof	atof;
 
-float	clamp(float value, float min, float max)
-{
-	if (value < min)
-		return (min);
-	else if (value > max)
-		return (max);
-	else
-		return (value);
-}
-
-float	abso(float value)
-{
-	if (value >= 0.0)
-		return (value);
-	else
-		return (value * -1.0);
-}
-
-void	*allocate_memory(size_t buffer_size)
-{
-	void	*buffer;
-
-	buffer = (void *)malloc(buffer_size);
-	if (!buffer)
-		return (NULL);
-	return (buffer);
-}
-
-void	free_memory(void *buffer)
-{
-	if (buffer)
+	atof.result = 0.0;
+	atof.sign = 1.0;
+	atof.divisor = 10.0;
+	if (*str == '-' || *str == '+')
 	{
-		free(buffer);
-		buffer = NULL;
+		if (*str == '-')
+			atof.sign = -1.0;
+		str++;
 	}
+	while (*str >= '0' && *str <= '9')
+		atof.result = atof.result * 10.0 + (*str++ - '0');
+	if (*str == '.')
+	{
+		str++;
+		while (*str >= '0' && *str <= '9')
+		{
+			atof.result += (*str++ - '0') / atof.divisor;
+			atof.divisor *= 10.0;
+		}
+	}
+	return (atof.sign * atof.result);
+}
+
+void	*memory_realloc(void *ptr, size_t old_size, size_t new_size)
+{
+	void	*new_ptr;
+	size_t	copy_size;
+
+	if (new_size == 0)
+	{
+		free_memory(ptr);
+		return (NULL);
+	}
+	if (ptr == NULL)
+		return (allocate_memory(new_size));
+	new_ptr = allocate_memory(new_size);
+	if (new_ptr == NULL)
+		return (NULL);
+	if (old_size < new_size)
+		copy_size = old_size;
+	else
+		copy_size = new_size;
+	ft_memcpy(new_ptr, ptr, copy_size);
+	free_memory(ptr);
+	return (new_ptr);
 }

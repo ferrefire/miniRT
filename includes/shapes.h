@@ -20,7 +20,7 @@
 
 typedef struct s_sphere
 {
-	int		type; // 1 = for s_sphere
+	int		type;
 	t_vec	color;
 	t_vec	center;
 	float	radius;
@@ -37,17 +37,17 @@ typedef struct s_plane
 
 typedef struct s_cylinder
 {
-	int		type; // 3 for s_cylinder
+	int		type;
 	t_vec	color;
 	t_vec	position;
 	t_vec	axis;
 	float	radius;
-	float	height;
+	float	h;
 }	t_cylinder;
 
 typedef struct s_cone
 {
-	int		type; // 4 for s_cone
+	int		type;
 	t_vec	color;
 	t_vec	vertex;
 	t_vec	axis;
@@ -57,7 +57,7 @@ typedef struct s_cone
 
 typedef struct s_triangle
 {
-	int		type; // 5 for s_triangle
+	int		type;
 	t_vec	color;
 	t_vec	v1;
 	t_vec	v2;
@@ -66,7 +66,7 @@ typedef struct s_triangle
 
 typedef struct s_disc
 {
-	int		type; // 6 for s_disc
+	int		type;
 	t_vec	color;
 	t_vec	center;
 	t_vec	normal;
@@ -91,7 +91,9 @@ typedef struct s_shapes
 
 void	parse_sphere(char **tokens, t_shapes *shapes);
 void	parse_plane(char **tokens, t_shapes *shapes);
+void	parse_plane2(t_plane *plane, float length);
 void	parse_cylinder(char **tokens, t_shapes *shapes);
+void	parse_cylinder2(t_cylinder *cylinder, float length, char **tokens);
 void	parse_cone(char **tokens, t_shapes *shapes);
 void	parse_triangle(char **tokens, t_shapes *shapes);
 void	parse_disc(char **tokens, t_shapes *shapes);

@@ -43,8 +43,11 @@ void	initiate_mlx(t_mlx_data *data)
 	data->height = HEIGHT;
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, data->width, data->height, "test");
-	data->image_data.image = mlx_new_image(data->mlx, data->width, data->height);
-	data->image_data.address = mlx_get_data_addr(data->image_data.image, &data->image_data.bpp, &data->image_data.line, &data->image_data.endian);
+	data->image_data.image = mlx_new_image(data->mlx,
+			data->width, data->height);
+	data->image_data.address = mlx_get_data_addr(data->image_data.image,
+			&data->image_data.bpp, &data->image_data.line,
+			&data->image_data.endian);
 }
 
 void	initiate_scene(t_scene_data *data)
@@ -52,7 +55,8 @@ void	initiate_scene(t_scene_data *data)
 	printf("initiating scene...\n");
 	data->camera.position = (t_vec){0, 0, 0};
 	data->camera.foward = (t_vec){0, 0, 1};
-	data->camera.right = normalize(cross(data->camera.foward, (t_vec){0, 1, 0}));
+	data->camera.right = normalize(cross(
+				data->camera.foward, (t_vec){0, 1, 0}));
 	data->camera.up = normalize(cross(data->camera.right, data->camera.foward));
 	data->camera.fov = 45;
 	data->camera.aspect_ratio = (float)WIDTH / (float)HEIGHT;
