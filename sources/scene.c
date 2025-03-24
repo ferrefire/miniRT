@@ -17,7 +17,7 @@
 #include <stdlib.h> // For malloc, free, exit
 #include <stdio.h>
 
-void parse_ambient(char **tokens, t_scene_data *scene)
+void	parse_ambient(char **tokens, t_scene_data *scene)
 {
 	if (!tokens[1] || !tokens[2])
 	{
@@ -28,7 +28,7 @@ void parse_ambient(char **tokens, t_scene_data *scene)
 	scene->ambient.color = parse_vec(tokens[2]);
 }
 
-void parse_camera(char **tokens, t_scene_data *scene)
+void	parse_camera(char **tokens, t_scene_data *scene)
 {
 	if (!tokens[1] || !tokens[2] || !tokens[3])
 	{
@@ -40,7 +40,7 @@ void parse_camera(char **tokens, t_scene_data *scene)
 	scene->camera.fov = atof(tokens[3]);
 }
 
-void parse_light(char **tokens, t_scene_data *scene)
+void	parse_light(char **tokens, t_scene_data *scene)
 {
 	if (!tokens[1] || !tokens[2] || !tokens[3])
 	{

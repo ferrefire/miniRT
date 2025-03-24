@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-t_data	*initiateData(void)
+t_data	*initiate_data(void)
 {
 	t_data	*data;
 
@@ -27,20 +27,18 @@ t_data	*initiateData(void)
 	data->start = time(NULL);
 	data->x = 0;
 	data->y = 0;
-	initiateScene(&data->scene_data);
-	initiateMLX(&data->mlx_data);
+	initiate_scene(&data->scene_data);
+	initiate_mlx(&data->mlx_data);
 	return (data);
 }
 
-void	initiateMLX(t_mlx_data *data)
+void	initiate_mlx(t_mlx_data *data)
 {
 	printf("initiating mlx...\n");
-
 	data->mlx = NULL;
 	data->win = NULL;
 	data->image_data.image = NULL;
 	data->image_data.address = NULL;
-
 	data->width = WIDTH;
 	data->height = HEIGHT;
 	data->mlx = mlx_init();
@@ -49,55 +47,26 @@ void	initiateMLX(t_mlx_data *data)
 	data->image_data.address = mlx_get_data_addr(data->image_data.image, &data->image_data.bpp, &data->image_data.line, &data->image_data.endian);
 }
 
-void	initiateScene(t_scene_data *data)
+void	initiate_scene(t_scene_data *data)
 {
 	printf("initiating scene...\n");
-	
 	data->camera.position = (t_vec){0, 0, 0};
 	data->camera.foward = (t_vec){0, 0, 1};
 	data->camera.right = normalize(cross(data->camera.foward, (t_vec){0, 1, 0}));
 	data->camera.up = normalize(cross(data->camera.right, data->camera.foward));
 	data->camera.fov = 45;
-	data->camera.aspectRatio = (float)WIDTH / (float)HEIGHT;
+	data->camera.aspect_ratio = (float)WIDTH / (float)HEIGHT;
 	data->ambient.color = (t_vec){255, 255, 255};
 	data->ambient.intensity = 0.1;
 	data->light.color = (t_vec){255, 255, 255};
 	data->light.intensity = 1.0;
 	data->light.source = normalize((t_vec){1, 1, -1});
-
 	data->shapes.spheres = NULL;
-	data->shapes.sphereCount = 0;
+	data->shapes.sphere_count = 0;
 	data->shapes.planes = NULL;
-	data->shapes.planeCount = 0;
+	data->shapes.plane_count = 0;
 	data->shapes.cylinders = NULL;
-	data->shapes.cylinderCount = 0;
-
+	data->shapes.cylinder_count = 0;
 	data->step = 0.005;
-	//data->step = 0.001;
 	data->camera.far = 50.0;
-
-    //parse_file("scenes/invalid/duplicate_camera.rt", data);
-
-	//data->light.source = normalize((t_vec){1, 1, -1});
-	//data->camera.fov = 45;
 }
-
-/*void	initiateRays(t_ray_data *data, t_camera camera)
-{
-	int x;
-	int y;
-
-	printf("initiating rays...\n");
-	y = 0;
-	while (y < HEIGHT)
-	{
-		x = 0;
-		while (x < WIDTH)
-		{
-			data->rays[x][y] = initiateRay(x, y, camera);
-			x++;
-		}
-		y++;
-	}
-	
-}*/

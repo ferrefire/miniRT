@@ -23,26 +23,26 @@
 #include <fcntl.h>	// For file opening flags
 #include <stdio.h>	// For printf, perror
 
-int valid_file(char *file)
+int	valid_file(char *file)
 {
-	char *extension;
-	int path_len;
-	int ext_len;
+	char	*extension;
+	int		path_len;
+	int		ext_len;
 
 	extension = ".rt";
 	path_len = ft_strlen(file);
 	ext_len = ft_strlen(extension);
 	if (path_len < ext_len || !ft_strnstr(file + path_len - ext_len, extension, path_len))
 		return (1);
-  return (0);
+	return (0);
 }
 
-void parse_file(const char *filename, t_scene_data *data)
+void	parse_file(const char *filename, t_scene_data *data)
 {
-	int fd;
-	char *line;
+	int		fd;
+	char	*line;
 
-  printf("initiaiting parse\n\n\n\n");
+	printf("initiaiting parse\n\n\n\n");
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
@@ -59,20 +59,17 @@ void parse_file(const char *filename, t_scene_data *data)
 		parse_line(line, data);
 		free(line);
 	}
-  printf("PARSING COMPLETE\n");
+	printf("PARSING COMPLETE\n");
 	close(fd);
 }
 
-void parse_line(char *line, t_scene_data *scene)
+void	parse_line(char *line, t_scene_data *scene)
 {
-	char **tokens;
+	char	**tokens;
 
 	tokens = ft_split(line, ' ');
 	if (!tokens || !tokens[0])
-	{
-		// free_tokens(tokens);
 		return;
-	}
 	if (ft_strncmp(tokens[0], "A", ft_strlen("A") + 1) == 0)
 		parse_ambient(tokens, scene);
 	else if (ft_strncmp(tokens[0], "C", ft_strlen("C") + 1) == 0)
@@ -86,11 +83,11 @@ void parse_line(char *line, t_scene_data *scene)
 	free_tokens(tokens);
 }
 
-t_vec parse_vec(const char *str)
+t_vec	parse_vec(const char *str)
 {
-	t_vec rgb;
-	char **tokens;
-	int i;
+	t_vec	rgb;
+	char	**tokens;
+	int		i;
 
 	tokens = ft_split(str, ',');
 	i = 0;

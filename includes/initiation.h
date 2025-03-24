@@ -11,12 +11,11 @@
 /* ************************************************************************** */
 
 #ifndef INITIATION_H
-#define INITIATION_H
+# define INITIATION_H
+# include "minirt.h"
 
-#include "minirt.h"
-
-t_data	*initiateData(void);
-void 	initiateMLX(t_mlx_data *data);
-void 	initiateScene(t_scene_data *data);
+t_data	*initiate_data(void);
+void	initiate_mlx(t_mlx_data *data);
+void	initiate_scene(t_scene_data *data);
 
 #endif

@@ -11,18 +11,17 @@
 /* ************************************************************************** */
 
 #ifndef UTILITIES_H
-#define UTILITIES_H
+# define UTILITIES_H
 
-#include "vector.h"
-#include <stdio.h>
+# include "vector.h"
+# include <stdio.h>
 
-void printVector(t_vec vec);
-float clamp(float value, float min, float max);
-float abso(float value);
-void  *memory_realloc(void *ptr, size_t old_size, size_t new_size);
-void  free_memory(void *buffer);
-void  *allocate_memory(size_t buffer_size);  
-double  ft_atof(const char *str);
-//float pow(float value, int power);
+void	print_vector(t_vec vec);
+float	clamp(float value, float min, float max);
+float	abso(float value);
+void	*memory_realloc(void *ptr, size_t old_size, size_t new_size);
+void	free_memory(void *buffer);
+void	*allocate_memory(size_t buffer_size);
+double	ft_atof(const char *str);
 
 #endif

@@ -23,31 +23,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
-	t_data *data;
+	t_data	*data;
 
-	
-  	if (argc != 2 || valid_file(argv[1]) == 1)
-  	{
-    	printf("Error: Could not Open file or no file given as input.\n");
-    	return (1);
-  	}
-
-  	printf("start\n");
-
-  	data = initiateData();
-  	parse_file(argv[1], &data->scene_data);
+	if (argc != 2 || valid_file(argv[1]) == 1)
+	{
+		printf("Error: Could not Open file or no file given as input.\n");
+		return (1);
+	}
+	printf("start\n");
+	data = initiate_data();
+	parse_file(argv[1], &data->scene_data);
 	data->scene_data.camera.right = normalize(cross(data->scene_data.camera.foward, (t_vec){0, 1, 0}));
 	data->scene_data.camera.up = normalize(cross(data->scene_data.camera.foward, data->scene_data.camera.right));
-	setHooks(data);
-
-	mlx_loop_hook(data->mlx_data.mlx, renderImage, data);
+	set_hooks(data);
+	mlx_loop_hook(data->mlx_data.mlx, render_image, data);
 	mlx_loop(data->mlx_data.mlx);
-	//renderImage(data);
-	//printf("sphere cound: %i\n", data->scene_data.shapes.sphereCount);
-
-	cleanData(data);
+	clean_data(data);
 	printf("end\n");
 	exit(EXIT_SUCCESS);
 }

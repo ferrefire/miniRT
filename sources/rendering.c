@@ -20,230 +20,132 @@
 
 #include <stdio.h>
 
-int colorToInt(t_vec color)
+int	color_to_int(t_vec color)
 {
 	return (255 << 24 | (int)color.x << 16 | (int)color.y << 8 | (int)color.z);
 }
 
-void renderPixel(int x, int y, t_vec color, t_data *data)
+void	render_pixel(int x, int y, t_vec color, t_data *data)
 {
-	char *dst;
-
-	//mlx_pixel_put(data->mlx_data.mlx, data->mlx_data.win, x, y, colorToInt(color));
+	char	*dst;
 
 	dst = data->mlx_data.image_data.address + (y * data->mlx_data.image_data.line + x * (data->mlx_data.image_data.bpp / 8));
-	*(unsigned int *)dst = colorToInt(color);
-
-	//mlx_put_image_to_window(data->mlx_data.mlx, data->mlx_data.win, data->mlx_data.image_data.image, 0, 0);
+	*(unsigned int *)dst = color_to_int(color);
 }
 
-int renderImage(t_data *data)
+int	render_image(t_data *data)
 {
-	if (data->y >= HEIGHT) return (1);
+	t_ray	current_ray;
+	t_vec	pixel_color;
 
-	t_ray currentRay = initiateRay(data->x, data->y, data->scene_data.camera);
-	t_vec pixelColor = traceRay(currentRay, data->scene_data);
-	renderPixel(data->x, data->y, pixelColor, data);
-
+	if (data->y >= HEIGHT)
+		return (1);
+	current_ray = initiate_ray(data->x, data->y, data->scene_data.camera);
+	pixel_color = trace_ray(current_ray, data->scene_data);
+	render_pixel(data->x, data->y, pixel_color, data);
 	data->x += 1;
-
 	if (data->x >= WIDTH)
 	{
 		data->x = 0;
 		data->y += 1;
 		if (data->y >= HEIGHT)
-		{
-			//mlx_put_image_to_window(data->mlx_data.mlx, data->mlx_data.win, data->mlx_data.image_data.image, 0, 0);
 			printf("image rendered in %ld seconds\n", (time(NULL) - data->start));
-		}
 		mlx_put_image_to_window(data->mlx_data.mlx, data->mlx_data.win, data->mlx_data.image_data.image, 0, 0);
 	}
-
 	return (0);
 }
 
-t_vec traceRay(t_ray ray, t_scene_data scene)
+t_vec	trace_ray(t_ray ray, t_scene_data scene)
 {
-	t_hit hitInfo;
-	//float inter;
+	t_hit	hit_info;
+	t_vec	light_normal;
+	float	shadow;
+	float	light_distance;
+	float	diffuse;
+	t_vec	specular_color;
+	float	closest;
+	t_vec	reflection_normal;
+	float	specular;
 
-	//inter = 0.0;
-	//while (inter <= 1.0)
-	while (distanceSquared(ray.position, ray.origin) < scene.camera.far * scene.camera.far)
+	while (distance_squared(ray.position, ray.origin) < scene.camera.far * scene.camera.far)
 	{
-		hitInfo = checkIntersections(ray, scene);
-		if (hitInfo.intersected)
+		hit_info = check_intersections(ray, scene);
+		if (hit_info.intersected)
 		{
-			t_vec lightNormal = normalize(sub(scene.light.source, ray.position));
-			float shadow = inShadow((t_ray){ray.position, lightNormal, ray.position, scene.light.source, 
-				distance(ray.position, scene.light.source)}, scene);
-			// float shadow = inShadow((t_ray){ray.position, lightNormal, ray.position, scene.light.source}, scene);
-			//float shadow = 1.0;
-			float lightDistance = 1.0;
-			float diffuse = clamp(dot(hitInfo.normal, lightNormal) * lightDistance * shadow, scene.ambient.intensity, 1.0);
-			t_vec specularColor = BLACK;
-			//if (shadow > 0.0)
-			{
-				t_vec reflectionNormal = sub(mult(hitInfo.normal, 2.0 * dot(lightNormal, hitInfo.normal)), lightNormal);
-				float specular = clamp(dot(mult(ray.direction, -1.0), reflectionNormal), 0.0, 1.0);
-				specular = pow(specular, 4.0);
-				specularColor = mult(WHITE, specular);
-			}
-			return (clampVec(mult(add(hitInfo.color, specularColor), diffuse), 0.0, 255.0));
+			light_normal = normalize(sub(scene.light.source, ray.position));
+			shadow = in_shadow((t_ray){ray.position, light_normal, ray.position, scene.light.source, distance(ray.position, scene.light.source)}, scene);
+			light_distance = 1.0;
+			diffuse = clamp(dot(hit_info.normal, light_normal) * light_distance * shadow, scene.ambient.intensity, 1.0);
+			specular_color = BLACK;
+			reflection_normal = sub(mult(hit_info.normal, 2.0 * dot(light_normal, hit_info.normal)), light_normal);
+			specular = clamp(dot(mult(ray.direction, -1.0), reflection_normal), 0.0, 1.0);
+			specular = pow(specular, 4.0);
+			specular_color = mult(WHITE, specular);
+			return (clamp_vec(mult(add(hit_info.color, specular_color), diffuse), 0.0, 255.0));
 		}
-		// float closest = closestShape(ray.position, scene);
-		// inter += scene.step * clamp(closest, 1.0, 100.0);
-		// ray.position = lerp(ray.origin, ray.target, inter);
-		// float closest = clamp(closestShape(ray.position, scene), scene.step, scene.camera.far);
-		float closest = clamp(hitInfo.distance, scene.step, scene.camera.far);
+		closest = clamp(hit_info.distance, scene.step, scene.camera.far);
 		ray.position = add(ray.position, mult(ray.direction, closest));
 	}
-
 	return (BLACK);
 }
 
-float inShadow(t_ray ray, t_scene_data scene)
+float	in_shadow(t_ray ray, t_scene_data scene)
 {
-	t_hit hitInfo;
-	int away = 0;
-	//float inter;
+	t_hit	hit_info;
+	int		away;
+	float	closest;
 
-	//inter = scene.step * 25.0;
-	//ray.position = lerp(ray.origin, ray.target, inter);
-	//while (inter <= 1.0)
+	away = 0;
 	ray.position = add(ray.position, mult(ray.direction, 0.1));
-	while (distanceSquared(ray.position, ray.origin) < ray.max * ray.max)
+	while (distance_squared(ray.position, ray.origin) < ray.max * ray.max)
 	{
-		hitInfo = checkIntersections(ray, scene);
-		if (hitInfo.intersected)
+		hit_info = check_intersections(ray, scene);
+		if (hit_info.intersected)
 			return (0.0);
-		//if (away && hitInfo.intersected)
-		//	return (0.0);
-		//if (!away && !hitInfo.intersected)
-		//	away = 1;
-		//float closest = closestShape(ray.position, scene);
-		//inter += (scene.step * 5.0) * clamp(closest, 1.0, 100.0);
-		//ray.position = lerp(ray.origin, ray.target, inter);
-		//float closest = clamp(closestShape(ray.position, scene), scene.step, ray.max);
-		float closest = clamp(hitInfo.distance, scene.step, ray.max);
+		closest = clamp(hit_info.distance, scene.step, ray.max);
 		ray.position = add(ray.position, mult(ray.direction, closest));
 	}
-
 	return (1.0);
 }
 
-/*void renderImage(t_data *data)
+t_hit	check_intersections(t_ray ray, t_scene_data scene)
 {
-	int x;
-	int y;
-
-	y = 0;
-	while (y < data->mlx_data.height)
-	{
-		x = 0;
-		while (x < data->mlx_data.width)
-		{
-			//t_vec pixelColor = (t_vec){(int)(((float)x / (float)data->mlx_data.width) * 255), (int)(((float)y / (float)data->mlx_data.height) * 255), 255};
-			t_ray currentRay = initiateRay(x, y, data->scene_data.camera);
-			t_vec pixelColor = traceRay(currentRay, data->scene_data);
-			renderPixel(x, y, pixelColor, data);
-			x++;
-		}
-		y++;
-	}
-	printf("image rendered!\n");
-	mlx_loop(data->mlx_data.mlx);
-}*/
-
-/*t_vec traceRay(t_ray ray, t_scene_data scene)
-{
-	t_hit hitInfo;
-	int iterations;
-
-	iterations = 0;
-	while (iterations < 1000)
-	{
-		hitInfo = checkIntersections(ray, scene);
-		if (hitInfo.intersected)
-		{
-			t_vec lightNormal = normalize(sub(scene.light.source, ray.position));
-			//float shadow = inShadow((t_ray){ray.position, lightNormal}, scene);
-			float shadow = 1;
-			//float lightDistance = 1.0 - clamp(distance(ray.position, scene.light.source) / 75.0, 0.0, 1.0);
-			//lightDistance *= lightDistance;
-			//lightDistance *= lightDistance;
-			float lightDistance = 1.0;
-			float diffuse = clamp(dot(hitInfo.normal, lightNormal) * lightDistance * shadow, scene.ambient.intensity, 1.0);
-			return (mult(hitInfo.color, diffuse));
-		}
-		ray.position = add(ray.position, mult(ray.direction, 0.05));
-		iterations++;
-	}
-	
-	return (BLACK);
-}*/
-
-/*float inShadow(t_ray ray, t_scene_data scene)
-{
-	t_hit hitInfo;
-	int iterations;
-
-	iterations = 0;
-	ray.position = add(ray.position, mult(ray.direction, 0.5));
-	while (iterations < 500)
-	{
-		if (distance(ray.position, scene.light.source) <= 1.0)
-			break;
-		hitInfo = checkIntersections(ray, scene);
-		if (hitInfo.intersected)
-			return (0.0);
-		ray.position = add(ray.position, mult(ray.direction, 0.1));
-		iterations++;
-	}
-
-	return (1.0);
-}*/
-
-t_hit checkIntersections(t_ray ray, t_scene_data scene)
-{
-	t_hit hitInfo;
-	float closest;
-	int i;
+	t_hit	hit_info;
+	float	closest;
+	int		i;
 
 	closest = 10000.0;
 	i = 0;
-	while (i < scene.shapes.planeCount)
+	while (i < scene.shapes.plane_count)
 	{
-		hitInfo = intersectingPlane(ray.position, scene.shapes.planes[i]);
-		if (hitInfo.intersected)
-			return (hitInfo);
-		if (hitInfo.distance < closest)
-			closest = hitInfo.distance;
+		hit_info = intersecting_plane(ray.position, scene.shapes.planes[i]);
+		if (hit_info.intersected)
+			return (hit_info);
+		if (hit_info.distance < closest)
+			closest = hit_info.distance;
 		i++;
 	}
-
 	i = 0;
-	while (i < scene.shapes.sphereCount)
+	while (i < scene.shapes.sphere_count)
 	{
-		hitInfo = intersectingSphere(ray.position, scene.shapes.spheres[i]);
-		if (hitInfo.intersected)
-			return (hitInfo);
-		if (hitInfo.distance < closest)
-			closest = hitInfo.distance;
+		hit_info = intersecting_sphere(ray.position, scene.shapes.spheres[i]);
+		if (hit_info.intersected)
+			return (hit_info);
+		if (hit_info.distance < closest)
+			closest = hit_info.distance;
 		i++;
 	}
-
 	i = 0;
-	while (i < scene.shapes.cylinderCount)
+	while (i < scene.shapes.cylinder_count)
 	{
-		hitInfo = intersectingCylinder(ray.position, scene.shapes.cylinders[i]);
-		if (hitInfo.intersected)
-			return (hitInfo);
-		if (hitInfo.distance < closest)
-			closest = hitInfo.distance;
+		hit_info = intersecting_cylinder(ray.position, scene.shapes.cylinders[i]);
+		if (hit_info.intersected)
+			return (hit_info);
+		if (hit_info.distance < closest)
+			closest = hit_info.distance;
 		i++;
 	}
-	hitInfo.intersected = 0;
-	hitInfo.distance = closest;
-	return (hitInfo);
+	hit_info.intersected = 0;
+	hit_info.distance = closest;
+	return (hit_info);
 }
