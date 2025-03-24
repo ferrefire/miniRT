@@ -45,7 +45,9 @@ void	parse_sphere(char **tokens, t_shapes *shapes)
 	if (shapes->spheres == NULL)
 		shapes->spheres = (t_sphere *)malloc(sizeof(t_sphere));
 	else
-		shapes->spheres = (t_sphere *)memory_realloc(shapes->spheres, sizeof(t_sphere) * shapes->sphere_count, sizeof(t_sphere) * (shapes->sphere_count + 1));
+		shapes->spheres = (t_sphere *)memory_realloc(shapes->spheres,
+				sizeof(t_sphere) * shapes->sphere_count,
+				sizeof(t_sphere) * (shapes->sphere_count + 1));
 	if (!shapes->spheres)
 		exit(mem_error());
 	sphere = &shapes->spheres[shapes->sphere_count];
@@ -71,7 +73,9 @@ void	parse_plane(char **tokens, t_shapes *shapes)
 	if (shapes->planes == NULL)
 		shapes->planes = (t_plane *)malloc(sizeof(t_plane));
 	else
-		shapes->planes = (t_plane *)memory_realloc(shapes->planes, sizeof(t_plane) * shapes->plane_count, sizeof(t_plane) * (shapes->plane_count + 1));
+		shapes->planes = (t_plane *)memory_realloc(shapes->planes,
+				sizeof(t_plane) * shapes->plane_count,
+				sizeof(t_plane) * (shapes->plane_count + 1));
 	if (!shapes->planes)
 		exit(mem_error());
 	plane = &shapes->planes[shapes->plane_count];
@@ -79,7 +83,9 @@ void	parse_plane(char **tokens, t_shapes *shapes)
 	plane->position = parse_vec(tokens[1]);
 	plane->normal = parse_vec(tokens[2]);
 	plane->color = parse_vec(tokens[3]);
-	length = sqrt(plane->normal.x * plane->normal.x + plane->normal.y * plane->normal.y + plane->normal.z * plane->normal.z);
+	length = sqrt(plane->normal.x * plane->normal.x
+			+ plane->normal.y * plane->normal.y
+			+ plane->normal.z * plane->normal.z);
 	if (length == 0)
 		exit(invalid_shape());
 	plane->normal.x /= length;
@@ -104,7 +110,9 @@ void	parse_cylinder(char **tokens, t_shapes *shapes)
 	if (shapes->cylinders == NULL)
 		shapes->cylinders = (t_cylinder *)malloc(sizeof(t_cylinder));
 	else
-		shapes->cylinders = (t_cylinder *)memory_realloc(shapes->cylinders, sizeof(t_cylinder) * shapes->cylinder_count, sizeof(t_cylinder) * (shapes->cylinder_count + 1));
+		shapes->cylinders = (t_cylinder *)memory_realloc(shapes->cylinders,
+				sizeof(t_cylinder) * shapes->cylinder_count,
+				sizeof(t_cylinder) * (shapes->cylinder_count + 1));
 	if (!shapes->cylinders)
 	{
 		printf("Error: Memory allocation failed for cylinder\n");
@@ -117,7 +125,9 @@ void	parse_cylinder(char **tokens, t_shapes *shapes)
 	cylinder->radius = atof(tokens[3]) * 0.5;
 	cylinder->height = atof(tokens[4]);
 	cylinder->color = parse_vec(tokens[5]);
-	length = sqrt(cylinder->axis.x * cylinder->axis.x + cylinder->axis.y * cylinder->axis.y + cylinder->axis.z * cylinder->axis.z);
+	length = sqrt(cylinder->axis.x * cylinder->axis.x
+			+ cylinder->axis.y * cylinder->axis.y
+			+ cylinder->axis.z * cylinder->axis.z);
 	if (length == 0)
 	{
 		printf("Error: Cylinder axis vector cannot be zero\n");

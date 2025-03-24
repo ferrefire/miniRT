@@ -35,8 +35,11 @@ int	main(int argc, char *argv[])
 	printf("start\n");
 	data = initiate_data();
 	parse_file(argv[1], &data->scene_data);
-	data->scene_data.camera.right = normalize(cross(data->scene_data.camera.foward, (t_vec){0, 1, 0}));
-	data->scene_data.camera.up = normalize(cross(data->scene_data.camera.foward, data->scene_data.camera.right));
+	data->scene_data.camera.right = normalize(
+			cross(data->scene_data.camera.foward, (t_vec){0, 1, 0}));
+	data->scene_data.camera.up = normalize(
+			cross(data->scene_data.camera.foward,
+				data->scene_data.camera.right));
 	set_hooks(data);
 	mlx_loop_hook(data->mlx_data.mlx, render_image, data);
 	mlx_loop(data->mlx_data.mlx);

@@ -29,7 +29,9 @@ void	render_pixel(int x, int y, t_vec color, t_data *data)
 {
 	char	*dst;
 
-	dst = data->mlx_data.image_data.address + (y * data->mlx_data.image_data.line + x * (data->mlx_data.image_data.bpp / 8));
+	dst = data->mlx_data.image_data.address + (y
+			* data->mlx_data.image_data.line + x
+			* (data->mlx_data.image_data.bpp / 8));
 	*(unsigned int *)dst = color_to_int(color);
 }
 
@@ -49,8 +51,11 @@ int	render_image(t_data *data)
 		data->x = 0;
 		data->y += 1;
 		if (data->y >= HEIGHT)
-			printf("image rendered in %ld seconds\n", (time(NULL) - data->start));
-		mlx_put_image_to_window(data->mlx_data.mlx, data->mlx_data.win, data->mlx_data.image_data.image, 0, 0);
+			printf("image rendered in %ld seconds\n",
+				(time(NULL) - data->start));
+		mlx_put_image_to_window(data->mlx_data.mlx,
+			data->mlx_data.win,
+			data->mlx_data.image_data.image, 0, 0);
 	}
 	return (0);
 }
@@ -67,21 +72,29 @@ t_vec	trace_ray(t_ray ray, t_scene_data scene)
 	t_vec	reflection_normal;
 	float	specular;
 
-	while (distance_squared(ray.position, ray.origin) < scene.camera.far * scene.camera.far)
+	while (distance_squared(ray.position, ray.origin)
+		< scene.camera.far * scene.camera.far)
 	{
 		hit_info = check_intersections(ray, scene);
 		if (hit_info.intersected)
 		{
 			light_normal = normalize(sub(scene.light.source, ray.position));
-			shadow = in_shadow((t_ray){ray.position, light_normal, ray.position, scene.light.source, distance(ray.position, scene.light.source)}, scene);
+			shadow = in_shadow((t_ray){ray.position, light_normal, ray.position,
+					scene.light.source,
+					distance(ray.position, scene.light.source)}, scene);
 			light_distance = 1.0;
-			diffuse = clamp(dot(hit_info.normal, light_normal) * light_distance * shadow, scene.ambient.intensity, 1.0);
+			diffuse = clamp(dot(hit_info.normal, light_normal)
+					* light_distance * shadow, scene.ambient.intensity, 1.0);
 			specular_color = BLACK;
-			reflection_normal = sub(mult(hit_info.normal, 2.0 * dot(light_normal, hit_info.normal)), light_normal);
-			specular = clamp(dot(mult(ray.direction, -1.0), reflection_normal), 0.0, 1.0);
+			reflection_normal = sub(mult(hit_info.normal, 2.0
+						* dot(light_normal, hit_info.normal)),
+					light_normal);
+			specular = clamp(dot(mult(ray.direction,
+							-1.0), reflection_normal), 0.0, 1.0);
 			specular = pow(specular, 4.0);
 			specular_color = mult(WHITE, specular);
-			return (clamp_vec(mult(add(hit_info.color, specular_color), diffuse), 0.0, 255.0));
+			return (clamp_vec(mult(add(hit_info.color,
+							specular_color), diffuse), 0.0, 255.0));
 		}
 		closest = clamp(hit_info.distance, scene.step, scene.camera.far);
 		ray.position = add(ray.position, mult(ray.direction, closest));
@@ -138,7 +151,8 @@ t_hit	check_intersections(t_ray ray, t_scene_data scene)
 	i = 0;
 	while (i < scene.shapes.cylinder_count)
 	{
-		hit_info = intersecting_cylinder(ray.position, scene.shapes.cylinders[i]);
+		hit_info = intersecting_cylinder(ray.position,
+				scene.shapes.cylinders[i]);
 		if (hit_info.intersected)
 			return (hit_info);
 		if (hit_info.distance < closest)
