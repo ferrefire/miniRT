@@ -32,7 +32,6 @@ int	main(int argc, char *argv[])
 		printf("Error: Could not Open file or no file given as input.\n");
 		return (1);
 	}
-	printf("start\n");
 	data = initiate_data();
 	parse_file(argv[1], &data->scene_data);
 	data->scene_data.camera.right = normalize(
@@ -44,6 +43,5 @@ int	main(int argc, char *argv[])
 	mlx_loop_hook(data->mlx_data.mlx, render_image, data);
 	mlx_loop(data->mlx_data.mlx);
 	clean_data(data);
-	printf("end\n");
 	exit(EXIT_SUCCESS);
 }

@@ -30,7 +30,6 @@ void	clean_shapes(t_shapes *shapes)
 
 void	clean_data(t_data *data)
 {
-	printf("cleaning...\n");
 	clean_mlx(&data->mlx_data);
 	clean_shapes(&data->scene_data.shapes);
 	clear(&data);
@@ -38,7 +37,6 @@ void	clean_data(t_data *data)
 
 void	clean_mlx(t_mlx_data *data)
 {
-	printf("cleaning mlx...\n");
 	if (data->mlx)
 	{
 		if (data->image_data.image)

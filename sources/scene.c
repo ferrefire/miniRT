@@ -30,7 +30,7 @@ void	parse_ambient(char **tokens, t_scene_data *scene)
 
 void	parse_camera(char **tokens, t_scene_data *scene)
 {
-	if (!tokens[1] || !tokens[2] || !tokens[3] || scene->has_cam == 0)
+	if (!tokens[1] || !tokens[2] || !tokens[3] || scene->has_cam == 1)
 	{
 		printf("Error parsing camera token");
 		exit(EXIT_FAILURE);

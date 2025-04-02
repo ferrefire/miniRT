@@ -51,9 +51,6 @@ int	render_image(t_data *data)
 	{
 		data->x = 0;
 		data->y += 1;
-		if (data->y >= HEIGHT)
-			printf("image rendered in %ld seconds\n",
-				(time(NULL) - data->start));
 		mlx_put_image_to_window(data->mlx_data.mlx,
 			data->mlx_data.win,
 			data->mlx_data.image_data.image, 0, 0);
