@@ -48,6 +48,7 @@ typedef struct s_scene_data
 	t_light		light;
 	t_shapes	shapes;
 	float		step;
+	int			has_cam;
 }	t_scene_data;
 
 void	parse_ambient(char **tokens, t_scene_data *scene);

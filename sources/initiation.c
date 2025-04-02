@@ -73,4 +73,5 @@ void	initiate_scene(t_scene_data *data)
 	data->shapes.cylinder_count = 0;
 	data->step = 0.005;
 	data->camera.far = 50.0;
+	data->has_cam = 0;
 }

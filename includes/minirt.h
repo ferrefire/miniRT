@@ -32,8 +32,8 @@ typedef struct s_image_data
 
 typedef struct s_mlx_data
 {
-	void			*mlx;	// stores pointer returned by mlx init
-	void			*win;	// stores pointer to window
+	void			*mlx;
+	void			*win;
 	int				width;
 	int				height;
 	t_image_data	image_data;
