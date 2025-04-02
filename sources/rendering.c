@@ -79,15 +79,15 @@ t_vec	trace_ray(t_ray ray, t_scene_data scene)
 					scene.ambient.intensity, 1.0);
 			v.reflection_normal = sub(mult(hit_info.normal, 2.0
 						* dot(v.light_norm, hit_info.normal)), v.light_norm);
-			f.specular = pow(clamp(dot(mult(ray.direction, -1.0),
+			f.spec = pow(clamp(dot(mult(ray.direction, -1.0),
 							v.reflection_normal), 0.0, 1.0), 4.0);
-			return (clamp_vec(mult(add(hit_info.color, mult(WHITE, f.specular)),
+			return (clamp_vec(mult(add(hit_info.color, mult(fwhite(), f.spec)),
 						f.diffuse), 0.0, 255.0));
 		}
 		ray.pos = add(ray.pos, mult(ray.direction,
 					clamp(hit_info.distance, scene.step, scene.camera.far)));
 	}
-	return (BLACK);
+	return (fblack());
 }
 
 float	in_shadow(t_ray ray, t_scene_data scene)
