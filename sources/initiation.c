@@ -64,7 +64,7 @@ void	initiate_scene(t_scene_data *data)
 	data->ambient.intensity = 0.1;
 	data->light.color = (t_vec){255, 255, 255};
 	data->light.intensity = 1.0;
-	data->light.source = normalize((t_vec){1, 1, -1});
+	data->light.src = normalize((t_vec){1, 1, -1});
 	data->shapes.spheres = NULL;
 	data->shapes.sphere_count = 0;
 	data->shapes.planes = NULL;

@@ -43,7 +43,7 @@ void	parse_file(const char *filename, t_scene_data *data)
 	int		fd;
 	char	*line;
 
-	printf("initiaiting parse\n\n\n\n");
+	printf("reading file...\n");
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
@@ -63,7 +63,7 @@ void	parse_file(const char *filename, t_scene_data *data)
 		free(line);
 		line = get_next_line(fd);
 	}
-	printf("PARSING COMPLETE\n");
+	printf("processing complete!\nrendering scene...\n---------------------\n");
 	close(fd);
 }
 

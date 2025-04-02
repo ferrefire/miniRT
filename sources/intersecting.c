@@ -21,7 +21,7 @@ t_hit	intersecting_sphere(t_vec point, t_sphere sphere)
 	float	sphere_distance;
 
 	hit_info.intersected = 0;
-	sphere_distance = distance(point, sphere.center) - sphere.radius;
+	sphere_distance = dist(point, sphere.center) - sphere.radius;
 	if (sphere_distance <= 0.0)
 	{
 		hit_info.intersected = 1;
@@ -68,7 +68,7 @@ t_hit	intersecting_cylinder(t_vec point, t_cylinder cylinder)
 	a.axis_vec = mult(cylinder.axis,
 			clamp(t, cylinder.h * -0.5, cylinder.h * 0.5));
 	a.axis_p = add(cylinder.position, a.axis_vec);
-	cylinder_d = distance(point, a.axis_p) - cylinder.radius;
+	cylinder_d = dist(point, a.axis_p) - cylinder.radius;
 	if (cylinder_d <= 0.0 && t >= cylinder.h * -0.5 && t <= cylinder.h * 0.5)
 	{
 		hit_info.intersected = 1;
@@ -92,7 +92,7 @@ float	closest_sphere(t_vec point, t_scene_data scene)
 	closest_distance = 10000.0;
 	while (i < scene.shapes.sphere_count)
 	{
-		current_distance = distance_squared(point,
+		current_distance = distance_sq(point,
 				scene.shapes.spheres[i].center)
 			- (scene.shapes.spheres[i].radius
 				* scene.shapes.spheres[i].radius);
@@ -105,7 +105,7 @@ float	closest_sphere(t_vec point, t_scene_data scene)
 		i++;
 	}
 	if (closest_distance < 10000.0)
-		return (distance(point, closest_sphere) - closest_radius);
+		return (dist(point, closest_sphere) - closest_radius);
 	return (closest_distance);
 }
 
@@ -122,7 +122,7 @@ float	closest_cylinder(t_vec point, t_scene_data scene)
 		x.t = dot(c.v.base_vec, scene.shapes.cylinders[x.i].axis);
 		c.v.axis_vec = mult(scene.shapes.cylinders[x.i].axis, x.t);
 		c.v.axis_p = add(scene.shapes.cylinders[x.i].position, c.v.axis_vec);
-		c.current_distance = distance_squared(
+		c.current_distance = distance_sq(
 				point, c.v.axis_p) - (scene.shapes.cylinders[x.i].radius
 				* scene.shapes.cylinders[x.i].radius);
 		if (c.current_distance < c.closest_distance)
@@ -134,6 +134,6 @@ float	closest_cylinder(t_vec point, t_scene_data scene)
 		x.i++;
 	}
 	if (c.closest_distance < 10000.0)
-		return (distance(point, c.closest_cylinder) - c.closest_radius);
+		return (dist(point, c.closest_cylinder) - c.closest_radius);
 	return (c.closest_distance);
 }

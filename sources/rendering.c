@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "mlx.h"
+#include "vector.h"
 #include "minirt.h"
 #include "rendering.h"
 #include "intersecting.h"
@@ -66,32 +67,25 @@ t_vec	trace_ray(t_ray ray, t_scene_data scene)
 	t_vecs		v;
 	t_floats	f;
 
-	while (distance_squared(ray.position, ray.origin)
-		< scene.camera.far * scene.camera.far)
+	while (distance_sq(ray.pos, ray.origin) < pow(scene.camera.far, 2))
 	{
 		hit_info = check_intersections(ray, scene);
 		if (hit_info.intersected)
 		{
-			v.light_normal = normalize(sub(scene.light.source, ray.position));
-			f.shadow = in_shadow((t_ray){ray.position, v.light_normal, ray.position,
-					scene.light.source,
-					distance(ray.position, scene.light.source)}, scene);
-			f.light_distance = 1.0;
-			f.diffuse = clamp(dot(hit_info.normal, v.light_normal)
-					* f.light_distance * f.shadow, scene.ambient.intensity, 1.0);
-			v.specular_color = BLACK;
+			v.light_norm = normalize(sub(scene.light.src, ray.pos));
+			f.shadow = in_shadow((t_ray){ray.pos, v.light_norm, ray.pos,
+					scene.light.src, dist(ray.pos, scene.light.src)}, scene);
+			f.diffuse = clamp(dot(hit_info.normal, v.light_norm) * f.shadow,
+					scene.ambient.intensity, 1.0);
 			v.reflection_normal = sub(mult(hit_info.normal, 2.0
-						* dot(v.light_normal, hit_info.normal)),
-					v.light_normal);
-			f.specular = clamp(dot(mult(ray.direction,
-							-1.0), v.reflection_normal), 0.0, 1.0);
-			f.specular = pow(f.specular, 4.0);
-			v.specular_color = mult(WHITE, f.specular);
-			return (clamp_vec(mult(add(hit_info.color,
-							v.specular_color), f.diffuse), 0.0, 255.0));
+						* dot(v.light_norm, hit_info.normal)), v.light_norm);
+			f.specular = pow(clamp(dot(mult(ray.direction, -1.0),
+							v.reflection_normal), 0.0, 1.0), 4.0);
+			return (clamp_vec(mult(add(hit_info.color, mult(WHITE, f.specular)),
+						f.diffuse), 0.0, 255.0));
 		}
-		f.closest = clamp(hit_info.distance, scene.step, scene.camera.far);
-		ray.position = add(ray.position, mult(ray.direction, f.closest));
+		ray.pos = add(ray.pos, mult(ray.direction,
+					clamp(hit_info.distance, scene.step, scene.camera.far)));
 	}
 	return (BLACK);
 }
@@ -103,14 +97,14 @@ float	in_shadow(t_ray ray, t_scene_data scene)
 	float	closest;
 
 	away = 0;
-	ray.position = add(ray.position, mult(ray.direction, 0.1));
-	while (distance_squared(ray.position, ray.origin) < ray.max * ray.max)
+	ray.pos = add(ray.pos, mult(ray.direction, 0.1));
+	while (distance_sq(ray.pos, ray.origin) < ray.max * ray.max)
 	{
 		hit_info = check_intersections(ray, scene);
 		if (hit_info.intersected)
 			return (0.0);
 		closest = clamp(hit_info.distance, scene.step, ray.max);
-		ray.position = add(ray.position, mult(ray.direction, closest));
+		ray.pos = add(ray.pos, mult(ray.direction, closest));
 	}
 	return (1.0);
 }
