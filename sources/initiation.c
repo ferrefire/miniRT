@@ -22,7 +22,6 @@ t_data	*initiate_data(void)
 {
 	t_data	*data;
 
-	printf("initiating...\n");
 	data = malloc(sizeof(t_data));
 	data->start = time(NULL);
 	data->x = 0;
@@ -34,7 +33,6 @@ t_data	*initiate_data(void)
 
 void	initiate_mlx(t_mlx_data *data)
 {
-	printf("initiating mlx...\n");
 	data->mlx = NULL;
 	data->win = NULL;
 	data->image_data.image = NULL;
@@ -52,7 +50,6 @@ void	initiate_mlx(t_mlx_data *data)
 
 void	initiate_scene(t_scene_data *data)
 {
-	printf("initiating scene...\n");
 	data->camera.position = (t_vec){0, 0, 0};
 	data->camera.foward = (t_vec){0, 0, 1};
 	data->camera.right = normalize(cross(
@@ -73,4 +70,5 @@ void	initiate_scene(t_scene_data *data)
 	data->shapes.cylinder_count = 0;
 	data->step = 0.005;
 	data->camera.far = 50.0;
+	data->has_cam = 0;
 }

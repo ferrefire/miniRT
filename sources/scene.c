@@ -30,14 +30,15 @@ void	parse_ambient(char **tokens, t_scene_data *scene)
 
 void	parse_camera(char **tokens, t_scene_data *scene)
 {
-	if (!tokens[1] || !tokens[2] || !tokens[3])
+	if (!tokens[1] || !tokens[2] || !tokens[3] || scene->has_cam == 1)
 	{
-		printf("Error parsing token");
+		printf("Error parsing camera token");
 		exit(EXIT_FAILURE);
 	}
 	scene->camera.position = parse_vec(tokens[1]);
 	scene->camera.foward = normalize(parse_vec(tokens[2]));
 	scene->camera.fov = atof(tokens[3]);
+	scene->has_cam = 1;
 }
 
 void	parse_light(char **tokens, t_scene_data *scene)

@@ -18,10 +18,10 @@
 #include "cleaning.h"
 #include "libft.h"
 
-#include <stdlib.h> // For malloc, free, exit
-#include <unistd.h> // For open, close, read, write
-#include <fcntl.h>	// For file opening flags
-#include <stdio.h>	// For printf, perror
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdio.h>
 
 int	valid_file(char *file)
 {
@@ -43,7 +43,6 @@ void	parse_file(const char *filename, t_scene_data *data)
 	int		fd;
 	char	*line;
 
-	printf("reading file...\n");
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
@@ -63,7 +62,6 @@ void	parse_file(const char *filename, t_scene_data *data)
 		free(line);
 		line = get_next_line(fd);
 	}
-	printf("processing complete!\nrendering scene...\n---------------------\n");
 	close(fd);
 }
 
