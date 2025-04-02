@@ -17,12 +17,6 @@
 # include "ray.h"
 # include "vector.h"
 
-# define WHITE (t_vec){255, 255, 255}
-# define BLACK (t_vec){0, 0, 0}
-# define RED (t_vec){255, 0, 0}
-# define GREEN (t_vec){0, 255, 0}
-# define BLUE (t_vec){0, 0, 255}
-
 typedef struct s_hit
 {
 	int		intersected;
@@ -32,13 +26,13 @@ typedef struct s_hit
 	float	distance;
 }	t_hit;
 
-typedef	struct s_floats
+typedef struct s_floats
 {
 	float	shadow;
 	float	light_distance;
 	float	diffuse;
 	float	closest;
-	float	specular;
+	float	spec;
 }	t_floats;
 
 typedef struct s_vecs
@@ -48,6 +42,11 @@ typedef struct s_vecs
 	t_vec	reflection_normal;
 }	t_vecs;
 
+t_vec	fwhite(void);
+t_vec	fblack(void);
+t_vec	fred(void);
+t_vec	fgreen(void);
+t_vec	fblue(void);
 int		color_to_int(t_vec color);
 void	render_pixel(int x, int y, t_vec color, t_data *data);
 int		render_image(t_data *data);
@@ -55,6 +54,6 @@ t_vec	trace_ray(t_ray ray, t_scene_data scene);
 float	in_shadow(t_ray ray, t_scene_data scene);
 t_hit	check_intersections(t_ray ray, t_scene_data scene);
 t_hit	check_shape_intersections(t_ray ray, void *shapes, int count,
-				t_hit (*intersect_func)(t_vec, void *));
+			t_hit (*intersect_func)(t_vec, void *));
 
 #endif
