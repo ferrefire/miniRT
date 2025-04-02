@@ -47,7 +47,7 @@ void	parse_light(char **tokens, t_scene_data *scene)
 		printf("Error parsing L Token");
 		exit(EXIT_FAILURE);
 	}
-	scene->light.source = parse_vec(tokens[1]);
+	scene->light.src = parse_vec(tokens[1]);
 	scene->light.intensity = atof(tokens[2]);
 	scene->light.color = parse_vec(tokens[3]);
 }

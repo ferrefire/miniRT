@@ -25,7 +25,7 @@ t_vec	mult(t_vec a, float b)
 	return (result);
 }
 
-float	distance(t_vec a, t_vec b)
+float	dist(t_vec a, t_vec b)
 {
 	float	x;
 	float	y;
@@ -37,7 +37,7 @@ float	distance(t_vec a, t_vec b)
 	return (sqrt(x * x + y * y + z * z));
 }
 
-float	distance_squared(t_vec a, t_vec b)
+float	distance_sq(t_vec a, t_vec b)
 {
 	float	x;
 	float	y;

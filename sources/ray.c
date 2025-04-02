@@ -28,7 +28,7 @@ t_ray	initiate_ray(int x, int y, t_camera camera)
 	result.direction = normalize(add(add(
 					mult(camera.right, u),
 					mult(camera.up, v)), camera.foward));
-	result.position = camera.position;
+	result.pos = camera.position;
 	result.origin = camera.position;
 	result.target = add(result.origin, mult(result.direction, camera.far));
 	result.max = camera.far;

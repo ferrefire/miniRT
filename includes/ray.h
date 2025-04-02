@@ -18,7 +18,7 @@
 
 typedef struct s_ray
 {
-	t_vec	position;
+	t_vec	pos;
 	t_vec	direction;
 	t_vec	origin;
 	t_vec	target;

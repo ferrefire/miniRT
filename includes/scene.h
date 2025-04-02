@@ -38,7 +38,7 @@ typedef struct s_light
 {
 	float	intensity;
 	t_vec	color;
-	t_vec	source;
+	t_vec	src;
 }	t_light;
 
 typedef struct s_scene_data

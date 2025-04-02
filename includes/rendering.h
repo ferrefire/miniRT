@@ -43,7 +43,7 @@ typedef	struct s_floats
 
 typedef struct s_vecs
 {
-	t_vec	light_normal;
+	t_vec	light_norm;
 	t_vec	specular_color;
 	t_vec	reflection_normal;
 }	t_vecs;
@@ -56,4 +56,5 @@ float	in_shadow(t_ray ray, t_scene_data scene);
 t_hit	check_intersections(t_ray ray, t_scene_data scene);
 t_hit	check_shape_intersections(t_ray ray, void *shapes, int count,
 				t_hit (*intersect_func)(t_vec, void *));
+
 #endif
