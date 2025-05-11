@@ -1,27 +1,26 @@
 CC = gcc
 CFLAGS = -Iincludes/ -Iexternal/libft -Iexternal/minilibx
-#LDFLAGS = -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl
 LDFLAGS = -Lexternal/libft -Lexternal/minilibx -lft -lm -lmlx -lX11 -lXi -lXext
 
-SRC = $(wildcard sources/*.c)
-#EXTSRC = src/glad.c
-OBJDIR = obj/
-#OBJ = $(addprefix $(OBJDIR), $(SRC:.cpp=.o)) $(addprefix $(OBJDIR), $(EXTSRC:.c=.o))
-OBJ = $(addprefix $(OBJDIR), $(SRC:.c=.o))
-#EXTOBJ = $(addprefix $(OBJDIR), $(EXTSRC:.c=.o))
+SRCDIR = sources
+SOURCES = $(wildcard $(SRCDIR)/*.c)
+OBJDIR = objects
+OBJECTS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SOURCES))
 DEPS = includes/*.h
 MLX = external/minilibx/libmlx.a
-LIBFT = external/minilibx/libft.a
+LIBFT = external/libft/libft.a
 NAME = miniRT
 
 .PHONY: run clean fclean re
 
-$(NAME): $(DEPS) $(OBJ) $(LIBFT) $(MLX)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LDFLAGS)
+$(NAME): $(LIBFT) $(MLX) $(OBJDIR) $(OBJECTS)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) $(LDFLAGS)
 
-$(OBJDIR)%.o: %.c*
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $^ -o $@
+$(OBJDIR):
+	@mkdir -p $(OBJDIR)
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c*
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):
 	$(MAKE) -C external/libft
