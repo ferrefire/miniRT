@@ -6,7 +6,7 @@
 /*   By: ferre <ferre@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:39:00 by hflohil-      #+#    #+#                 */
-/*   Updated: 2025/03/11 15:01:42 by ferre         ########   odam.nl         */
+/*   Updated: 2025/05/11 19:41:39 by ferre         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_strrchr(const char *s, int c)
 {
 	char			*target;
 	char			c_char;
-	int	len;
+	int				len;
 
 	len = 0;
 	target = (char *)s;
